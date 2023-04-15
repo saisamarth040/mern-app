@@ -1,0 +1,77 @@
+  "proxy":  "https://saisamarthlogistics-rivp5.ondigitalocean.app/",
+
+
+
+   
+   let pro = await Product.find({ unique_no: req.body.unique_no }).exec();
+        const products = pro[0];
+        if (products) {
+          if (products.unique_no == product.unique_no) {
+            if (products.status == product.status) {
+              console.log("product code no doesn't vaild");
+             return res.status(401).json("product code no doesn't vaild!");
+            } else {
+              console.log("created");
+              console.log(product,products)
+              const savedProduct = await Product.create({ unique_no: req.body.unique_no,
+                pieces: req.body.pieces,
+                city: req.body.city,
+                status: req.body.status}).then((e)=>{
+console.log(e)
+                }).catch(err=>console.log(err))
+              console.log(savedProduct, "jjjjjjjjjjj")
+              res.status(200).json(savedProduct);
+            }
+          }
+        }
+        if (!products) {
+            console.log("k");
+          const savedProduct = await product.save();
+         return res.status(200).json(savedProduct);
+        }
+
+        // const savedProduct = await product.save();
+        // res.status(200).json(savedProduct);
+    console.log("object")
+
+
+
+
+    console.log("object")
+      const product = new Product({
+        unique_no: req.body.unique_no,
+        pieces: req.body.pieces,
+        city: req.body.city,
+        status: req.body.status
+      });
+
+       let pro = await Product.find({ unique_no: req.body.unique_no }).exec(); 
+        const products = pro[0];
+        if (products) {
+          if (products.unique_no == product.unique_no) {
+            if (products.status == product.status) {
+              console.log("product code no doesn't vaild");
+             return res.status(401).json("product code no doesn't vaild!");
+            } else {
+              console.log("created");
+              console.log(product,products)
+              const savedProduct = await Product.create({ unique_no: req.body.unique_no,
+                pieces: req.body.pieces,
+                city: req.body.city,
+                status: req.body.status}).then((e)=>{
+console.log(e)
+                }).catch(err=>console.log(err))
+              // console.log(savedProduct, "jjjjjjjjjjj")
+              // res.status(200).json(savedProduct);
+            }
+          }
+        }
+        if (!products) {
+            console.log("k");
+          const savedProduct = await product.save();
+         return res.status(200).json(savedProduct);
+        }
+
+        const savedProduct = await product.save();
+        res.status(200).json(savedProduct);
+    console.log("object")

@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 
 export default function Show() {
+  const api = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [deliverData, setDeliverData] = useState([]);
@@ -26,7 +27,6 @@ export default function Show() {
   const token = cookies.get("token");
 
   const sumbmitHandler = async () => {
-    const api = process.env.REACT_APP_API_URL;
     try {
       const response = await axios.get(`${api}/getdata?token=${token}`);
       setDeliverData(response.data.deliver_products);

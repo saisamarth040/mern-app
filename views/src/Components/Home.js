@@ -24,6 +24,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const api = process.env.REACT_APP_API_URL;
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -36,7 +37,6 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const api = process.env.REACT_APP_API_URL;
       try {
         const response = await axios.get(`${api}/getdata?token=${token}`);
         setApiData(response.data.products);

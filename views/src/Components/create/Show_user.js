@@ -25,10 +25,10 @@ const Show_user = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [data, setData] = React.useState([])
     const cookies = new Cookies();
+    const api = process.env.REACT_APP_API_URL;
     const token = cookies.get('token')
     const sumbmitHandler = async (e) => {
         console.log(token)
-        const api = process.env.REACT_APP_API_URL;
         await axios.get(`${api}/getUser?token=${token}`)
             .then((e) => {
                 console.log(e)

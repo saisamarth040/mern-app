@@ -20,30 +20,23 @@ const [err, setErr] = useState('');
     permanent_add,
     aadhar_no
   }
-
-
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const cookies = new Cookies();
   const sumbmitHandler = async (e) => {
     e.preventDefault();
     console.log(data)
     const api = process.env.REACT_APP_API_URL;
     console.log(api)
-    await axios.post(`/signup`,data ,{
+    await axios.post(`${api}/signup`,data ,{
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {
-    
-
         navigate('/show_user')
       }).catch(error => {
         console.log(error.response.data.message)
         setErr(error.response.data.message)
       })
-
     }
 
   return (

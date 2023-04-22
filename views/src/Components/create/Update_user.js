@@ -26,7 +26,7 @@ const Update_user = () => {
 
   const api = process.env.REACT_APP_API_URL;
 const getuser = async()=>{
-  axios.get(`/update_user?id=${id}`).then((e)=>{
+  axios.get(`${api}/update_user?id=${id}`).then((e)=>{
     const data = e.data.user;
     console.log(e)
     setName(data.name)
@@ -42,7 +42,7 @@ const getuser = async()=>{
   const cookies = new Cookies();
   const sumbmitHandler = async (e) => {
     e.preventDefault();
-    await axios.post(`/update_user`,data ,{
+    await axios.post(`${api}/update_user`,data ,{
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {

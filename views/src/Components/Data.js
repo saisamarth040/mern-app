@@ -25,7 +25,7 @@ export default function Data() {
  const navigate= useNavigate();
   const sumbmitHandler = async (e) => {
    const api = process.env.REACT_APP_API_URL;
-     await axios.get(`/getdata?token=${token}`)
+     await axios.get(`${api}/getdata?token=${token}`)
       .then((e) => {
         const d = e.data.products
        console.log(e)
@@ -36,12 +36,7 @@ export default function Data() {
           if (mm < 10) mm = '0' + mm;
           const dateNow = yyyy+"-"+mm;
           const createDate = e.createdAt.split("T")[0].slice(0, 7);
-        //   if(dateNow===createDate){
-        // console.log(e)
-
-        //   }
           return dateNow===createDate;
-
        })
        console.log(a)
         setData(a)
@@ -60,8 +55,6 @@ export default function Data() {
       const api = process.env.REACT_APP_API_URL;
      await axios.get(`${api}/delete_product?id=${id}`)
   }
-
-
     const updateHnadler =  (e)=>{
       const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)

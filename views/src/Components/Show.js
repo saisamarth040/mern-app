@@ -28,7 +28,7 @@ export default function Show() {
   const sumbmitHandler = async () => {
     const api = process.env.REACT_APP_API_URL;
     try {
-      const response = await axios.get(`/getdata?token=${token}`);
+      const response = await axios.get(`${api}/getdata?token=${token}`);
       setDeliverData(response.data.deliver_products);
       setData(response.data.products);
       console.log(response.data.products);
@@ -37,7 +37,6 @@ export default function Show() {
         console.log(e)
         const deliveryData = deliverData.find((delivery)=>{
           console.log(delivery,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-            // delivery.unique_no === e.unique_no
         })
         
         console.log(deliveryData,">>>>>>>>>>.");
@@ -51,7 +50,7 @@ export default function Show() {
     const id = e.target.closest("[data-key]").getAttribute("data-key");
     const api = process.env.REACT_APP_API_URL;
     try {
-      await axios.get(`/delete_product?id=${id}`);
+      await axios.get(`${api}/delete_product?id=${id}`);
       sumbmitHandler();
     } catch (error) {
       console.log(error);
@@ -60,7 +59,6 @@ export default function Show() {
 
   const updateHandler = (e) => {
     const id = e.target.closest("[data-key]").getAttribute("data-key");
-    console.log(id);
     navigate(`/update_product/${id}`);
   };
 

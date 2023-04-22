@@ -43,19 +43,15 @@ const Insert = () => {
     try {
       e.preventDefault();
       const api = process.env.REACT_APP_API_URL;
-      await axios.post(`/insert`, data, {
+      await axios.post(`${api}/insert`, data, {
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("submit the response")
-      console.log(e, "frtstststst")
-      navigate('/Sucees'
-      )
+      navigate('/Sucees')
     } catch (error) {
       navigate("/error")
       console.log(error.response.data)
       console.log(error,"sdfgfdsdfgdsdfdsdf")
       setErr(error.response.data)
-
       console.log(error.config);
     }
   }

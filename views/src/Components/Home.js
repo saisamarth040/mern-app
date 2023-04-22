@@ -38,7 +38,7 @@ const Home = () => {
     const fetchData = async () => {
       const api = process.env.REACT_APP_API_URL;
       try {
-        const response = await axios.get(`/getdata?token=${token}`);
+        const response = await axios.get(`${api}/getdata?token=${token}`);
         setApiData(response.data.products);
         setFilteredData(response.data.products);
       } catch (error) {
@@ -57,8 +57,7 @@ const Home = () => {
 
   const updateHnadler = (e) => {
     const id = e.target.closest('[data-key]').getAttribute('data-key');
-    console.log(id)
-    navigate(`/update_product/${id}`);
+    navigate(`${api}/update_product/${id}`);
   }
 
 

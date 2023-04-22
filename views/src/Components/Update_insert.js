@@ -24,7 +24,6 @@ const Update_insert = () => {
 
   const changeUnique_no = (e) => {
     setUnique_no(e.target.value)
-    console.log(e.target.value)
   }
   const changeCity = (e) => {
     setCity(e.target.value)
@@ -44,19 +43,15 @@ const Update_insert = () => {
     e.preventDefault();
     console.log(data)
     const api = process.env.REACT_APP_API_URL;
-    await axios.post(`/update_product`, data, {
+    await axios.post(`${api}/update_product`, data, {
       headers: { 'Content-Type': 'application/json' }
     })
       .then((e) => {
-        console.log("submit the response")
-        console.log(e, "frtstststst")
-        navigate('/Sucees'
-        )
+        navigate('/Sucees')
       }).catch(error => {
         console.log(error.response.data)
         console.log(error,"sdfgfdsdfgdsdfdsdf")
         setErr(error.response.data)
-
         console.log(error.config);
       })
   }

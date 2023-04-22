@@ -17,7 +17,7 @@ const Login = () => {
       e.preventDefault();
       const api = process.env.REACT_APP_API_URL;
       console.log(api)
-      await axios.post(`/signin`,{name,password} ,{
+      await axios.post(`${api}/signin`,{name,password} ,{
         headers: { 'Content-Type': 'application/json' }
       })
         .then((data) => {

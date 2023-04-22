@@ -29,7 +29,7 @@ const Show_user = () => {
     const sumbmitHandler = async (e) => {
         console.log(token)
         const api = process.env.REACT_APP_API_URL;
-        await axios.get(`/getUser?token=${token}`)
+        await axios.get(`${api}/getUser?token=${token}`)
             .then((e) => {
                 console.log(e)
                 setData(e.data.users)
@@ -44,7 +44,7 @@ const Show_user = () => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
         const api = process.env.REACT_APP_API_URL;
-        await axios.get(`/delete_user?id=${id}`)
+        await axios.get(`${api}/delete_user?id=${id}`)
         sumbmitHandler();
     }
 
@@ -56,7 +56,7 @@ const Show_user = () => {
     const updateHnadler = (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        navigate(`/update_user/${id}`);
+        navigate(`${api}/update_user/${id}`);
     }
     return (
         <>

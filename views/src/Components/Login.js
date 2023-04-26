@@ -15,7 +15,7 @@ const Login = () => {
     const cookies = new Cookies();
     const sumbmitHandler = async (e) => {
       e.preventDefault();
-      const api = process.env.REACT_APP_API_URL;
+      const api = "https://saisamarthlogistic.com";
       console.log(api)
       await axios.post(`${api}/signin`,{name,password} ,{
         headers: { 'Content-Type': 'application/json' }

@@ -25,7 +25,8 @@ const Show_user = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [data, setData] = React.useState([])
     const cookies = new Cookies();
-    const api = process.env.REACT_APP_API_URL;
+    // const api = process.env.REACT_APP_API_URL;
+    const api = "https://saisamarthlogistic.com";
     const token = cookies.get('token')
     const sumbmitHandler = async (e) => {
         console.log(token)

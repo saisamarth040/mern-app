@@ -38,11 +38,12 @@ const Update_insert = () => {
   }
   const { id } = useParams();
  const data = {status, pieces, city, unique_no, token , id}
+//  const api = process.env.REACT_APP_API_URL;
+const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
     e.preventDefault();
     console.log(data)
-    const api = process.env.REACT_APP_API_URL;
     await axios.post(`${api}/update_product`, data, {
       headers: { 'Content-Type': 'application/json' }
     })

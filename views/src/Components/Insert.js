@@ -38,11 +38,12 @@ const Insert = () => {
     setStatus(e)
   }
  const data = {status, pieces, city, unique_no, token }
+//  const api = process.env.REACT_APP_API_URL;
+const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
     try {
       e.preventDefault();
-      const api = process.env.REACT_APP_API_URL;
       await axios.post(`${api}/insert`, data, {
         headers: { 'Content-Type': 'application/json' }
       })

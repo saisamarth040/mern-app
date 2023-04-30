@@ -1,98 +1,50 @@
 import React from 'react';
 import { Routes,Route } from 'react-router-dom'
- import Login from './Components/Login'
-import Insert from './Components/Insert';
-import Sucees from './Components/Sucees';
-import Show from './Components/Show';
-import Header from './Components/Header';
-import Data from './Components/Data';
-import { useSelector } from 'react-redux';
-import ProtectedRoute from './Components/ProtectedRoute';
-import Home from './Components/Home';
-import CreateUser from './Components/create/Create_user';
-import ShowUser from './Components/create/Show_user';
-import UpdateUser from './Components/create/Update_user';
-import UpdateInsert from './Components/Update_insert';
-import Error from './Components/error';
-
+import UserLogin from './Components/User/UserLogin'
+import Deliver from './Components/User/Deliver'
+import Pick from './Components/User/Pick'
+import Main from './Components/User/Main';
+ import Sucees from './Components/Request/Sucees';
+ import Failed from './Components/Request/Failed';
+import Login from './Components/Admin/auth/Login';
+import Dashboard from './Components/Admin/Dash.js';
+import Create_user from './Components/Admin/User/Create_user';
+import Show_user from './Components/Admin/User/Show_user';
+import Update_user from './Components/Admin/User/Update_user';
+import Product from './Components/Admin/Product/Product';
+import Allproducts from './Components/Admin/Product/Allproducts';
+import Update_Product from './Components/Admin/Product/Update_Product';
  
 function App() {
-  const { isAuthenticated } = useSelector((state) => state.root);
-  console.log(isAuthenticated)
+
   return (
     <>
-    {/* <ColorModeSwitcher/> */}
+   
 
-    <Header/>
+   
     <Routes>
-      <Route path='/' element={<Login/>} />
-      <Route path='/login' element={<Login/>} />
-      <Route path='/Sucees' element={<Sucees />} />
-      <Route path='/error' element={<Error />} />
-      <Route path='/insert' element={<Insert/>} />
-      {/* <Route path='/admin' element={<AdminLogin />} /> */}
-     
+      <Route path='/' element={<UserLogin/>} />
+      <Route path='/main' element={<Main/>} />
+      <Route path='/pick' element={<Pick/>} />
+      <Route path='/deliver' element={<Deliver />} />
+
+     <Route path='/sucees' element={<Sucees />} />
+     <Route path='/error' element={<Failed />} />
+
+
+
+     <Route path='/admin' element={<Login />} />
+     <Route path='/admin/dashboard' element={<Dashboard />} />
+     <Route path='/admin/create_user' element={<Create_user />} />
+     <Route path='/admin/show_user' element={<Show_user />} />
+     <Route path='/admin/update_user/:id' element={<Update_user />} />
+     <Route path='/admin/show_products' element={<Product />} />
+     <Route path='/admin/show_all_products' element={<Allproducts />} />
+     <Route path='/admin/update_product/:id' element={<Update_Product />} />
 
       
-      <Route
-          path="/update_user/:id"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <UpdateUser />
-            </ProtectedRoute>
-          }
-          />
-            <Route
-          path="/update_product/:id"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <UpdateInsert />
-            </ProtectedRoute>
-          }
-          />
-          <Route
-          path="/data"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <Data />
-            </ProtectedRoute>
-          }
-          />
-          <Route
-          path="/create_user"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <CreateUser />
-            </ProtectedRoute>
-          }
-          />
-          
-          <Route
-          path="/show_user"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <ShowUser />
-            </ProtectedRoute>
-          }
-          />
-            <Route
-          path="/home"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <Home />
-            </ProtectedRoute>
-          }
-          />
-
-<Route
-          path="/show"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <Show />
-            </ProtectedRoute>
-          }
-          />
-    </Routes>
+    
+    </Routes> 
     </>
   );
 }

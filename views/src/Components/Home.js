@@ -24,8 +24,8 @@ const Home = () => {
   const navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),

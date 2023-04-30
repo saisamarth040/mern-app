@@ -23,11 +23,6 @@ const userModel = new mongoose.Schema(
             minLength: [6, "name must have atleast 4 characters"],
             required: [true, "name field must not empty"],
         },
-        type: {
-            type: String,
-            default: "user",
-            required:false,
-        },
         contact_no:{
             type: String,
             minLength: [10, "number must have atleast 10 characters"],
@@ -41,8 +36,11 @@ const userModel = new mongoose.Schema(
             type: String,
             minLength: [10, "aadhar number must have atleast 10 characters"],
             required:true,
+        },
+        state:{
+            type: String,
+            required:true,
         }
-
        
     },
     { timestamps: true }

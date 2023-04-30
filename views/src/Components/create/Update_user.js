@@ -24,8 +24,8 @@ const Update_user = () => {
     aadhar_no,id
   }
 
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
 const getuser = async()=>{
   axios.get(`${api}/update_user?id=${id}`).then((e)=>{
     const data = e.data.user;

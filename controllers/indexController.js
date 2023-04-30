@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
+const Admin = require("../models/adminModel");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
@@ -17,20 +18,12 @@ const generateRandomString = (length) => {
   return result;
 };
 
-const generateRandomPassword = () => {
-  const min = 1000000;
-  const max = 9999999;
-  return Math.floor(Math.random() * (max - min + 1) + min).toString();
-};
+
 
 
 
 exports.signup = async (req, res, next) => {
-  try {
-    // let user = await User.findOne({ email: req.body.email }).exec();
-    // if (user) {
-    //   return res.status(501).json({ message: "user exists" });
-    // }   
+  try { 
     const password = generateRandomPassword();
     const newUser = new User({
       ...req.body,
@@ -44,6 +37,26 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+
+
+exports.AdminSignup = async (req, res, next) => {
+  try {
+    let admin = await Admin.findOne({ email: req.body.email }).exec();
+    if (admin) {
+      return res.status(501).json({ message: "user exists" });
+    }   
+    const password = generateRandomPassword();
+    const newAdmin = new Admin({
+      ...req.body,
+      password,
+    }); 
+    await newAdmin.save();
+    return res.json(newAdmin);
+    res.json(newAdmin);
+  } catch (error) {
+    res.status(501).json({ message: error.message });
+  }
+};
 
 exports.signin = async (req, res, next) => {
   try {
@@ -64,6 +77,26 @@ exports.signin = async (req, res, next) => {
     res.status(501).json({ message: error.message });
   }
 };
+exports.adminSignin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    let admin = await Admin.findOne({ email }).exec();
+    if (!admin) {
+      return res.status(404).json({ message: "admin not found" });
+    }
+    const token = jwt.sign({ id: admin.id }, "secretkey");
+    const datas = { admin, token }
+    res.cookie("accessToken", token, {
+      maxAge: 999900000,
+      httpOnly: true,
+    })
+      .status(200)
+      .json(datas);
+  } catch (error) {
+    res.status(501).json({ message: error.message });
+  }
+};
+
 exports.getOneUser = async (req, res, next) => {
     try {
       const id = req.query.id;
@@ -257,13 +290,11 @@ exports.update_product = async (req, res, next) => {
         message: 'User not found',
       });
     }
-
     res.status(200).json({
       success: true,
       message: 'User updated successfully',
       data: updatedProduct,
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({

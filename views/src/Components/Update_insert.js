@@ -38,8 +38,8 @@ const Update_insert = () => {
   }
   const { id } = useParams();
  const data = {status, pieces, city, unique_no, token , id}
-//  const api = process.env.REACT_APP_API_URL;
-const api = "https://saisamarthlogistic.com";
+ const api = process.env.REACT_APP_API_URL;
+// const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
     e.preventDefault();

@@ -35,6 +35,13 @@ const productModel = new mongoose.Schema(
             default: Date.now,
             require: [true, "pick date is required"],
         },
+        file:{
+            type: Object,
+            default: {
+                public_id: "",
+                url: "",
+            },
+        }
     },
     { timestamps: true }
 );

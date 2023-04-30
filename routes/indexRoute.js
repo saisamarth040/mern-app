@@ -1,5 +1,5 @@
 const express = require("express");
-const { homepage, signup, signin, signout, product_create,getAllProducts, getAllUSer, delete_User, delete_product, update_user, update_product, getOneUser } = require("../controllers/indexController");
+const { homepage, signup, signin, signout, product_create,getAllProducts, getAllUSer, delete_User, delete_product, update_user, update_product, getOneUser, AdminSignup, adminSignin } = require("../controllers/indexController");
 const router = express.Router();
 
 
@@ -9,8 +9,15 @@ router.get("/", homepage);
 // // post /signup - create user
 router.post("/signup", signup);
 
+// post -signup - create Admin
+router.post("/signup_admin", AdminSignup);
+
+
 // // post /signin - login user
 router.post("/signin", signin);
+
+//  admin -- signin 
+router.post("/signin_admin", adminSignin);
 
 // // get /signout - logout user
 router.get("/signout", signout);

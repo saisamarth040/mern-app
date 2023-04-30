@@ -23,8 +23,8 @@ export default function Data() {
   const cookies = new Cookies();
   const token = cookies.get('token')
  const navigate= useNavigate();
-//  const api = process.env.REACT_APP_API_URL;
-const api = "https://saisamarthlogistic.com";
+ const api = process.env.REACT_APP_API_URL;
+// const api = "https://saisamarthlogistic.com";
   const sumbmitHandler = async (e) => {
      await axios.get(`${api}/getdata?token=${token}`)
       .then((e) => {

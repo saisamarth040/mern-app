@@ -26,8 +26,8 @@ const [err, setErr] = useState('');
   const sumbmitHandler = async (e) => {
     e.preventDefault();
     console.log(data)
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
+    const api = process.env.REACT_APP_API_URL;
+    // const api = "https://saisamarthlogistic.com";
     console.log(api)
     await axios.post(`${api}/signup`,data ,{
       headers: { 'Content-Type': 'application/json' }

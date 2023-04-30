@@ -19,8 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { DeleteIcon, AddIcon } from "@chakra-ui/icons";
 
 export default function Show() {
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [deliverData, setDeliverData] = useState([]);

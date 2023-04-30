@@ -9,6 +9,7 @@ import {
     useDisclosure,
     VStack,
   } from '@chakra-ui/react';
+  import './styleSheets/style.css'
 import axios from 'axios';
   import React from 'react';
   import {  RiMenu5Fill } from 'react-icons/ri';
@@ -38,7 +39,7 @@ navigate('/login')
     return (
       <>
         <Button
-          onClick={onOpen}
+         onClick={onOpen}
           colorScheme={'yellow'}
           width="12"
           height={'12'}
@@ -51,8 +52,8 @@ navigate('/login')
           <RiMenu5Fill />
         </Button>
   
-        <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay  backdropFilter={"blur(4px)"}/>
+        <Drawer className="side" placement="left" isOpen={isOpen} >
+        {/* <DrawerOverlay  backdropFilter={"blur(4px)"}/> */}
           <DrawerContent>
           <DrawerHeader borderBottomWidth={'1px'}>nav</DrawerHeader>
           <DrawerBody>
@@ -61,7 +62,7 @@ navigate('/login')
           {isAuthenticated ? (
                     <> 
                      <HStack>
-                          <Link onClick={onClose} to="/home">
+                          <Link  to="/home">
                             <Button variant={'ghost'} colorScheme={'yellow'}>
                               Home
                             </Button>
@@ -70,22 +71,22 @@ navigate('/login')
                          
                         </HStack>
 
-                    <LinkButton onClose={onClose} url="/insert" title="Insert" /> <Link onClick={onClose} to="/data">
+                    <LinkButton  url="/insert" title="Insert" /> <Link  to="/data">
                     <Button variant={'ghost'} colorScheme={'yellow'}>
                       This Month Data
                     </Button>
                   </Link>
-                  <Link onClick={onClose} to="/show">
+                  <Link  to="/show">
                     <Button variant={'ghost'} colorScheme={'yellow'}>
                       All Data
                     </Button>
                   </Link>
-                  <Link onClick={onClose} to="/create_user">
+                  <Link  to="/create_user">
                     <Button variant={'ghost'} colorScheme={'yellow'}>
                      create_user
                     </Button>
                   </Link>
-                  <Link onClick={onClose} to="/show_user">
+                  <Link  to="/show_user">
                     <Button variant={'ghost'} colorScheme={'yellow'}>
                      show_user
                     </Button>
@@ -94,9 +95,9 @@ navigate('/login')
                     </> ) :( 
                       <>
                         
-                      <LinkButton onClose={onClose} url="/login" title="Login" />
+                      <LinkButton  url="/login" title="Login" />
               <LinkButton
-                onClose={onClose}
+                
                 url="/insert"
                 title="Insrt the Data"
               />
@@ -116,7 +117,7 @@ navigate('/login')
                       <VStack>
                        
                         <HStack>
-                        <Link onClick={onClose} to="/logout">
+                        <Link  to="/logout">
                         <Button  onClick={LogoutHander}  colorScheme={'yellow'}>Logout</Button>
                       </Link>
                         </HStack>
@@ -125,7 +126,7 @@ navigate('/login')
                     </>
                   ) : (
                     <>
-                      <Link onClick={onClose} to="/login">
+                      <Link  to="/login">
                         <Button colorScheme={'yellow'}>Login</Button>
                       </Link>
   

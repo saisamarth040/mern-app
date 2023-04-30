@@ -25,8 +25,8 @@ const Show_user = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [data, setData] = React.useState([])
     const cookies = new Cookies();
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
+    const api = process.env.REACT_APP_API_URL;
+    // const api = "https://saisamarthlogistic.com";
     const token = cookies.get('token')
     const sumbmitHandler = async (e) => {
         console.log(token)
@@ -44,7 +44,6 @@ const Show_user = () => {
     const delete_handler = async (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        const api = process.env.REACT_APP_API_URL;
         await axios.get(`${api}/delete_user?id=${id}`)
         sumbmitHandler();
     }

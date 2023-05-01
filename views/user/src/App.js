@@ -33,17 +33,6 @@ function App() {
 
 
 
-     <Route path='/admin' element={<Login />} />
-     <Route path='/admin/dashboard' element={<Dashboard />} />
-     <Route path='/admin/create_user' element={<Create_user />} />
-     <Route path='/admin/show_user' element={<Show_user />} />
-     <Route path='/admin/update_user/:id' element={<Update_user />} />
-     <Route path='/admin/show_products' element={<Product />} />
-     <Route path='/admin/show_all_products' element={<Allproducts />} />
-     <Route path='/admin/update_product/:id' element={<Update_Product />} />
-
-      
-    
     </Routes> 
     </>
   );

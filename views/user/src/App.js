@@ -33,7 +33,7 @@ function App() {
      <Route path='/sucees' element={<Sucees />} />
      <Route path='/error' element={<Failed />} />
 
-     <Route
+     {/* <Route
           path="/admin/dashboard"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
@@ -90,8 +90,8 @@ function App() {
            <Update_Product />
             </ProtectedRoute>
           }
-/>
-     {/* <Route path='/admin' element={<Login />} />
+/> */}
+    <Route path='/admin' element={<Login />} />
      <Route path='/admin/dashboard' element={<Dashboard />} />
      <Route path='/admin/create_user' element={<Create_user />} />
      <Route path='/admin/show_user' element={<Show_user />} />
@@ -100,7 +100,7 @@ function App() {
      <Route path='/admin/show_all_products' element={<Allproducts />} />
      <Route path='/admin/update_product/:id' element={<Update_Product />} />
 
-       */}
+    
     
     </Routes> 
     </>

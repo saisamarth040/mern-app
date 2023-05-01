@@ -93,7 +93,28 @@ const Show_user = () => {
                                         <td>  {e.contact_no ? e.contact_no : "noop..."}   </td>
                                         <td>  {e.password ? e.password : "noop.."}     </td>
                                         <td> {e.aadhar_no ? e.aadhar_no : "noop.."}   </td>
-                                        <td>   {e.permanent_add ? e.permanent_add : "noop.."} </td>
+                                        <td>     <>
+                  <p>
+                    {e.permanent_add.split(' ')[0]}{' '}
+                    {e.permanent_add.split(' ')[1]}{' '}
+                    {e.permanent_add.split(' ')[2]}{' '}
+                    {e.permanent_add.split(' ')[3]}{' '}
+                  </p>
+                  <p>
+                  {e.permanent_add.split(' ')[4]}{' '}
+                    {e.permanent_add.split(' ')[5]}{' '}
+                    {e.permanent_add.split(' ')[6]}{' '}
+                    {e.permanent_add.split(' ')[7]}{' '}
+                    {e.permanent_add.split(' ')[8]}{' '}
+                    </p> 
+                    <p>
+                    {e.permanent_add.split(' ')[10]}{' '}
+                    {e.permanent_add.split(' ')[11]}{' '}
+                    {e.permanent_add.split(' ')[12]}{' '}
+                    {e.permanent_add.split(' ')[13]}{' '}
+
+                    </p>
+                    </>  </td>
                                         <td>  {e._id ? (<>
                                             <p>
 

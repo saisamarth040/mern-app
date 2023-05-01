@@ -40,7 +40,12 @@ const userModel = new mongoose.Schema(
         state:{
             type: String,
             required:true,
-        }
+        },
+         type: {
+            type: String,
+            default: "user",
+            required:false,
+        },
        
     },
     { timestamps: true }

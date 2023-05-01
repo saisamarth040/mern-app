@@ -4,6 +4,7 @@ import UserLogin from './Components/User/UserLogin'
 import Deliver from './Components/User/Deliver'
 import Pick from './Components/User/Pick'
 import Main from './Components/User/Main';
+
  import Sucees from './Components/Request/Sucees';
  import Failed from './Components/Request/Failed';
 import Login from './Components/Admin/auth/Login';
@@ -14,8 +15,10 @@ import Update_user from './Components/Admin/User/Update_user';
 import Product from './Components/Admin/Product/Product';
 import Allproducts from './Components/Admin/Product/Allproducts';
 import Update_Product from './Components/Admin/Product/Update_Product';
- 
+import { useSelector } from 'react-redux';
+import ProtectedRoute from './Components/ProtectedRoute';
 function App() {
+  const { isAuthenticated } = useSelector((state) => state.root);
 
   return (
     <>
@@ -29,7 +32,66 @@ function App() {
       <Route path='/deliver' element={<Deliver />} />
      <Route path='/sucees' element={<Sucees />} />
      <Route path='/error' element={<Failed />} />
-     <Route path='/admin' element={<Login />} />
+
+     <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+              <Dashboard /> 
+            </ProtectedRoute>
+          }
+/>
+
+<Route
+          path="/admin/create_user"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+            <Create_user /> 
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/show_user"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+            <Show_user />
+            </ProtectedRoute>
+          }
+/>
+
+<Route
+          path="/admin/update_user/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+           <Update_user />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/show_products"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+           <Product />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/show_all_products"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+           <Allproducts />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/update_product/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+           <Update_Product />
+            </ProtectedRoute>
+          }
+/>
+     {/* <Route path='/admin' element={<Login />} />
      <Route path='/admin/dashboard' element={<Dashboard />} />
      <Route path='/admin/create_user' element={<Create_user />} />
      <Route path='/admin/show_user' element={<Show_user />} />
@@ -38,7 +100,7 @@ function App() {
      <Route path='/admin/show_all_products' element={<Allproducts />} />
      <Route path='/admin/update_product/:id' element={<Update_Product />} />
 
-      
+       */}
     
     </Routes> 
     </>

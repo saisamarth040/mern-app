@@ -3,15 +3,18 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { useDispatch } from "react-redux";
 
 const UserLogin = () => {
   const [name, setName] = useState('');
+  const [logined, setLogined] = useState(false);
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
   const cookies = new Cookies();
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
     e.preventDefault();
@@ -20,6 +23,13 @@ const UserLogin = () => {
     })
       .then((data) => {
         cookies.set('token', data['data']['token'])
+        const dataType = data.data.datas.user.type
+        console.log(dataType=="admin", dataType)
+        if(dataType=="admin"){
+          setLogined(true)
+          dispatch({ type: "login" })
+          return navigate('/admin/dashboard')
+        }
         navigate('/main')
       }).catch(error => {
         setErr(error.response.data.message)

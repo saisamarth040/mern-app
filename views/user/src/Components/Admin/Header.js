@@ -6,9 +6,11 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
+  Image,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import logo from '../assest/img/logo144.png';
 import axios from 'axios';
 import React from 'react';
 import {  RiMenu5Fill } from 'react-icons/ri';
@@ -54,85 +56,44 @@ navigate('/login')
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay  backdropFilter={"blur(4px)"}/>
         <DrawerContent>
-        <DrawerHeader borderBottomWidth={'1px'}>nav</DrawerHeader>
+        <DrawerHeader borderBottomWidth={'1px'}><Image className='logo' src={logo} />  SAI SAMARTH LOGISTIC</DrawerHeader>
         <DrawerBody>
         <VStack spacing={'4'} alignItems="flex-start">
-        
-        {isAuthenticated ? (
+        <HStack>
+     
                   <> 
                    <HStack>
-                        <Link onClick={onClose} to="/home">
+                        <Link onClick={onClose} to="/admin/dashboard">
                           <Button variant={'ghost'} colorScheme={'yellow'}>
-                            Home
+                            DESHBOARD
                           </Button>
                         </Link>
                        
                        
                       </HStack>
 
-                  <LinkButton onClose={onClose} url="/insert" title="Insert" /> <Link onClick={onClose} to="/data">
+                  <LinkButton onClose={onClose} url="/admin/create_user" title="Insert" /> <Link onClick={onClose} to="/data">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
-                    This Month Data
+                  CREATE USER
                   </Button>
                 </Link>
-                <Link onClick={onClose} to="/show">
+                <Link onClick={onClose} to="/admin/show_user">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
-                    All Data
+                  VIEW USER
                   </Button>
                 </Link>
-                <Link onClick={onClose} to="/create_user">
+                <Link onClick={onClose} to="/admin/show_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
-                   create_user
+                  THIS MONTH 
                   </Button>
                 </Link>
-                <Link onClick={onClose} to="/show_user">
+                <Link onClick={onClose} to="/admin/show_all_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
-                   show_user
+                  VIEW ALL PRODUCTS
                   </Button>
                 </Link>
 
-                  </> ) :( 
-                    <>
-                      
-                    <LinkButton onClose={onClose} url="/login" title="Login" />
-            <LinkButton
-              onClose={onClose}
-              url="/insert"
-              title="Insrt the Data"
-            />
-            
-                    </>  
-)}
-      
-
-              <HStack
-                justifyContent={'space-evenly'}
-                position="absolute"
-                bottom={'2rem'}
-                width="80%"
-              >
-{isAuthenticated ? (
-                  <>
-                    <VStack>
-                     
-                      <HStack>
-                      <Link onClick={onClose} to="/logout">
-                      <Button  onClick={LogoutHander}  colorScheme={'yellow'}>Logout</Button>
-                    </Link>
-                      </HStack>
-                      
-                    </VStack>
-                  </>
-                ) : (
-                  <>
-                    <Link onClick={onClose} to="/login">
-                      <Button colorScheme={'yellow'}>Login</Button>
-                    </Link>
-
-                 
-                  </>
-                )}
-
+                  </> 
               </HStack>
         </VStack>
 

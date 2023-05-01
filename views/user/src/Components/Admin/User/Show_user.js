@@ -21,6 +21,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import Sidebar from '../Sidebar';
 import '../../styleSheets/style.css'
+import Header from "../Header";
 const Show_user = () => {
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,7 +62,7 @@ const Show_user = () => {
     }
     return (
         <>
-    <Sidebar />
+    <Header />
             <ChakraProvider >
                 <Box className="SHow_user_main" w="95vw" m="5">
                     <TableContainer>

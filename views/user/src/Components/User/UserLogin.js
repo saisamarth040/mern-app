@@ -24,7 +24,7 @@ const UserLogin = () => {
       .then((data) => {
         cookies.set('token', data['data']['token'])
         const dataType = data.data.datas.user.type
-        console.log(dataType=="admin", dataType)
+        console.log(dataType=="admin", dataType, data)
         if(dataType=="admin"){
           setLogined(true)
           dispatch({ type: "login" })

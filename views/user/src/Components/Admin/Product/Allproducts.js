@@ -23,9 +23,19 @@ import { DeleteIcon, AddIcon, } from '@chakra-ui/icons'
 import Sidebar from "../Sidebar";
 import { useState } from "react";
 import { Calendar } from "react-date-range";
+import Header from "../Header";
 
 export default function Allproducts() {
     const [data, setData] = React.useState([])
+    const [apiData, setApiData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const [dateRange, setDateRange] = useState([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: "selection",
+      },
+    ]);
     const cookies = new Cookies();
     const token = cookies.get('token')
     const navigate = useNavigate();
@@ -37,7 +47,7 @@ export default function Allproducts() {
                 const d = e.data.products
                 console.log(d)
                 setData(d)
-                const sortedData = [...d].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                
             }).catch(error => {
                 console.log(error)
             })
@@ -45,6 +55,19 @@ export default function Allproducts() {
 
     React.useEffect(() => {
         sumbmitHandler();
+        
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${api}/getdata?token=${token}`);
+        setApiData(response.data.products);
+        setFilteredData(response.data.products);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
     }, [])
 
     const delete_handler = async (e) => {
@@ -58,103 +81,33 @@ export default function Allproducts() {
         navigate(`/admin/update_product/${id}`);
     }
 
-    const [filter, setFilter] = useState('today');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-  
-    const filterData = () => {
-      const today = new Date();
-      const yesterday = new Date(today);
-      yesterday.setDate(today.getDate() - 1);
-      const thisWeek = new Date(today);
-      thisWeek.setDate(today.getDate() - today.getDay());
-      const thisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-      const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-      const filterStartDate = new Date(startDate);
-      const filterEndDate = new Date(endDate);
-data.map(e=>{
-    console.log(new Date(e.createdAt).toDateString())
-    console.log(today.toDateString())
-})
-      switch (filter) {
-        case 'today':
-          return data.filter((item) => new Date(item.createdAt).toDateString() === today.toDateString());
-        case 'yesterday':
-          return data.filter((item) => new Date(item.createdAt).toDateString() === yesterday.toDateString());
-        case 'thisWeek':
-          return data.filter((item) => new Date(item.createdAt).toDateString() >= thisWeek && new Date(item.createdAt).toDateString() <= today);
-        case 'thisMonth':
-          return data.filter((item) => new Date(item.createdAt).toDateString() >= thisMonth && new Date(item.createdAt).toDateString() <= endDate);
-        case 'lastMonth':
-          return data.filter((item) => new Date(item.createdAt).toDateString() >= lastMonth && new Date(item.createdAt).toDateString() < thisMonth);
-        case 'custom':
-          return data.filter((item) => new Date(item.createdAt).toDateString() >= filterStartDate && new Date(item.createdAt).toDateString() <= filterEndDate);
-        default:
-          return data;
-      }
+    const handleDateRangeChange = (ranges) => {
+      setDateRange([ranges.selection]);
+      const filtered = apiData.filter((data) => {
+        const createdAt = new Date(data.createdAt);
+        return (
+          createdAt >= ranges.selection.startDate &&
+          createdAt <= ranges.selection.endDate
+        );
+      });
+      setFilteredData(filtered);
     };
-
-  const filteredData = filterData();
-  const changeStartHandler = (e) => {
-    const newStartDate = e.target.value;
-    setStartDate(newStartDate);
-    setFilter({ startDate: newStartDate, endDate });
-  };
-
-  const changeEndHandler = (e) => {
-    const newEndDate = e.target.value;
-    setEndDate(newEndDate);
-    setFilter({ startDate, endDate: newEndDate });
-  };
     return (
         <>
-        <Sidebar />
+        <Header />
                 <ChakraProvider >
+                <Box m="10" w="70vw" textAlign="center">
+        <DateRangePicker
+          onChange={handleDateRangeChange}
+          ranges={dateRange}
+        />
+      </Box>
                     <Box className="SHow_user_main" w="95vw" m="5">
                         <TableContainer>
                             <Heading className="SHOW_USER_HEADING" mt={'5'} my="4" textAlign={'center'} size={'lg'}>
                                 PRODUCTS DATA HERE...
                             </Heading>
-                            <Box className="box-container">
-  <Box className="select-box">
-    <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-      <option value="today">Today</option>
-      <option value="yesterday">Yesterday</option>
-      <option value="thisWeek">This week</option>
-      <option value="thisMonth">This month</option>
-      <option value="lastMonth">Last month</option>
-      <option value="custom">Custom date range</option>
-    </select>
-    {filter === 'custom' && (
-      <Box className="calendar-box">
-       <HStack>
-       <Box my={'4'}>
-            <FormLabel htmlFor="startDate" children="SELECT STARTING :" />
-            <Input
-              required
-              id="startDate"
-              value={startDate}
-              onChange={changeStartHandler}
-              type={'date'}
-              focusBorderColor="yellow.500"
-            />
-          </Box>
-          <Box my={'4'}>
-            <FormLabel htmlFor="endDate" children="SELECT ENDING:" />
-            <Input
-              required
-              id="endDate"
-              value={endDate}
-              onChange={changeEndHandler}
-              type={'date'}
-              focusBorderColor="yellow.500"
-            />
-          </Box>
-       </HStack>
-      </Box>
-    )}
-  </Box>
-</Box>
+                      
                             <table class="table  table-striped table-bordered">
                                 <thead className="bg-primary-subtle">
                                     <tr>

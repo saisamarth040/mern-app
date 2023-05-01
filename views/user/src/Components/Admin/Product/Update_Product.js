@@ -5,6 +5,7 @@ import {  useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
 import Sidebar from '../Sidebar';
+import Header from '../Header';
 const Update_Product = () => {
 
   const [unique_no, setUnique_no] = useState('');
@@ -56,7 +57,7 @@ const getuser = async()=>{
     
   return (
     <>
-    <Sidebar />
+    <Header />
   <Container h={'95vh'}>
   <VStack h={'full'} justifyContent="center" spacing={'16'}>
         <Heading id='create_heading' children={'UPDATE PRODUCT'} />      

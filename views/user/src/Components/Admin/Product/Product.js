@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { DeleteIcon, AddIcon, } from '@chakra-ui/icons'
 import Sidebar from "../Sidebar";
+import Header from "../Header";
 
 export default function Product() {
     const [data, setData] = React.useState([])
@@ -64,7 +65,7 @@ export default function Product() {
 
     return (
         <>
-        <Sidebar />
+        <Header />
                 <ChakraProvider >
                     <Box className="SHow_user_main" w="95vw" m="5">
                         <TableContainer>

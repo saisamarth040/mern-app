@@ -1,11 +1,12 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import { Box, Link } from '@chakra-ui/react';
+import Header from './Header';
 
 const Dashboard = () => {
   return (
     <>
-    <Sidebar />
+    <Header />
 <Box id='right' w={'70'} > 
 <a href="/" >home</a></Box>
     </>

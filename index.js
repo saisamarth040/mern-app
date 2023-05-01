@@ -21,12 +21,13 @@ const corsOptions = {
   })
 
 app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname, "/views/user/build")));
 app.get("/", (req, res) => {
-  app.use(express.static(path.join(__dirname, "/views/user/build")));
   res.sendFile(path.join(__dirname + "/views/user/build/index.html"));
 });
+
+app.use(express.static(path.join(__dirname, "/views/admin/build")));
 app.get("/admin", (req, res) => {
-  app.use(express.static(path.join(__dirname, "/views/admin/build")));
   res.sendFile(path.join(__dirname + "/views/admin/build/index.html"));
 });
 

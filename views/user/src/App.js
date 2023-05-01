@@ -27,12 +27,8 @@ function App() {
       <Route path='/main' element={<Main/>} />
       <Route path='/pick' element={<Pick/>} />
       <Route path='/deliver' element={<Deliver />} />
-
      <Route path='/sucees' element={<Sucees />} />
      <Route path='/error' element={<Failed />} />
-
-
-
      <Route path='/admin' element={<Login />} />
      <Route path='/admin/dashboard' element={<Dashboard />} />
      <Route path='/admin/create_user' element={<Create_user />} />

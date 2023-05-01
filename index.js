@@ -21,7 +21,7 @@ const corsOptions = {
   })
 
 app.use(cors(corsOptions));
-app.use(express.static(path.join(__dirname, "/views/build")));
+app.use(express.static(path.join(__dirname, "/views/")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/views/user/build/index.html"));
 });

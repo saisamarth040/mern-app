@@ -13,8 +13,8 @@ const UserLogin = () => {
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
   const cookies = new Cookies();
-  const api = process.env.REACT_APP_API_URL;
-  // const api = "https://saisamarthlogistic.com";
+  // const api = process.env.REACT_APP_API_URL;
+  const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
     e.preventDefault();

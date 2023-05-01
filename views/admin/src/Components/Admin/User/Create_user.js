@@ -37,7 +37,7 @@ console.log(e)
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {
-        navigate('/admin/dashboard')
+        navigate('/dashboard')
       }).catch(error => {
         console.log(error.response.data.message)
         setErr(error.response.data.message)

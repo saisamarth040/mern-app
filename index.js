@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/views/user/build/index.html"));
 });
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname + "/views/user/build/index.html"));
+  res.sendFile(path.join(__dirname + "/views/admin/build/index.html"));
 });
 
 

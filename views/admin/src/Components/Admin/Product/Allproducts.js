@@ -49,13 +49,13 @@ export default function Allproducts() {
 
     const delete_handler = async (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
-        await axios.get(`${api}/admin/delete_product?id=${id}`)
+        await axios.get(`${api}/delete_product?id=${id}`)
         sumbmitHandler();
     }
     const updateHnadler = (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        navigate(`/admin/update_product/${id}`);
+        navigate(`/update_product/${id}`);
     }
 
     const [filter, setFilter] = useState('today');

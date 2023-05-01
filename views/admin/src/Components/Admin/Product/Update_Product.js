@@ -42,7 +42,7 @@ const getuser = async()=>{
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {
-        navigate('/admin/show_products')
+        navigate('/show_products')
       }).catch(error => {
         navigate("/error")
         console.log(error)

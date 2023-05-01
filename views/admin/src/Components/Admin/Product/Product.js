@@ -59,7 +59,7 @@ export default function Product() {
     const updateHnadler = (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        navigate(`admin/update_product/${id}`);
+        navigate(`/update_product/${id}`);
     }
 
     return (

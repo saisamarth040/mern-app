@@ -22,7 +22,7 @@ const Login = () => {
       })
         .then((data) => {
           cookies.set('token', data['data']['token'])
-          navigate('/admin/dashboard')
+          navigate('/dashboard')
         }).catch(error => {
           setErr(error.response.data.message)
           console.log(error)

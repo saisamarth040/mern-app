@@ -57,7 +57,7 @@ const Show_user = () => {
     const updateHnadler = (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        navigate(`/admin/update_user/${id}`);
+        navigate(`/update_user/${id}`);
     }
     return (
         <>

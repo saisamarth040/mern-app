@@ -59,8 +59,7 @@ navigate('/login')
         <DrawerHeader borderBottomWidth={'1px'}><Image className='logo' src={logo} />  SAI SAMARTH LOGISTIC</DrawerHeader>
         <DrawerBody>
         <VStack spacing={'4'} alignItems="flex-start">
-        <HStack>
-     
+      
                   <> 
                    <HStack>
                         <Link onClick={onClose} to="/admin/dashboard">
@@ -94,7 +93,7 @@ navigate('/login')
                 </Link>
 
                   </> 
-              </HStack>
+       
         </VStack>
 
 

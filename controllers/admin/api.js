@@ -5,6 +5,17 @@ const { generateRandomPassword } = require("../../utils/helperutils");
 
 exports.signup = async (req, res, next) => {
     try { 
+      let user = await User.findOne({contact_no: req.body.contact_no   });
+      console.log(user)
+      if (user) {
+          return res.status(501).json({ message: "user exists" });
+      }
+      let userAdar = await User.findOne({ aadhar_no:req.body.aadhar_no  });
+      console.log(userAdar)
+      if (userAdar) {
+          return res.status(501).json({ message: "user exists" });
+      }
+     
       const password = generateRandomPassword();
       const newUser = new User({
         ...req.body,

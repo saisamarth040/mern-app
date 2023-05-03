@@ -64,9 +64,9 @@ const Show_user = () => {
         <>
     <Header />
             <ChakraProvider >
-                <Box className="SHow_user_main" w="95vw" m="5">
+                <Box className="SHow_user" w="95vw" m="5">
                     <TableContainer>
-                        <Heading className="SHOW_USER_HEADING" mt={'5'} my="4" textAlign={'center'} size={'lg'}>
+                        <Heading className="SHOW_HEAD" mt={'5'} my="4"  size={'lg'}>
                             USER DATA HERE...
                         </Heading>
                         <table class="table  table-striped table-bordered">

@@ -54,22 +54,23 @@ export default function Product() {
 
     const delete_handler = async (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
-        await axios.get(`${api}/admin/delete_product?id=${id}`)
+       const data = await axios.get(`${api}/admin/delete_product?id=${id}`)
+        console.log(data)
         sumbmitHandler();
     }
     const updateHnadler = (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        navigate(`admin/update_product/${id}`);
+        navigate(`/admin/update_product/${id}`);
     }
 
     return (
         <>
         <Header />
                 <ChakraProvider >
-                    <Box className="SHow_user_main" w="95vw" m="5">
+                    <Box className="SHow_user" w="95vw" m="5">
                         <TableContainer>
-                            <Heading className="SHOW_USER_HEADING" mt={'5'} my="4" textAlign={'center'} size={'lg'}>
+                            <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'center'} size={'lg'}>
                                THIS MONTH PRODUCTS DATA HERE...
                             </Heading>
                             <table class="table  table-striped table-bordered">

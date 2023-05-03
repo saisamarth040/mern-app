@@ -64,10 +64,25 @@ option{
     top: 25vw;
     left: 21vw;
 }
+.SHow_user{
+  position: absolute;
+  top: 5vw;
+  left: 21vw;
+}
+.SHOW_HEAD{
+  position: absolute;
+  top: -5.8vw;
+  left: 2vw;
+}
 .SHOW_USER_HEADING{
     position: absolute;
     top: 2vw;
     left: 24vw;
+}
+.SHOW_USER_HEAD{
+  position: absolute;
+  top: 2vw;
+  left: 24vw;
 }
 .SHow_products_main{
     position: absolute;

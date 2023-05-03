@@ -69,7 +69,6 @@ const getuser = async()=>{
               id="unique_no"
               value={unique_no}
               onChange={e => setUnique_no(e.target.value)}
-              placeholder="john Doe"
               type={'text'}
               focusBorderColor="yellow.500"
             />
@@ -81,7 +80,6 @@ const getuser = async()=>{
               id="PICK_PIECES"
               value={pick_pieces}
               onChange={e => setPick_pieces(e.target.value)}
-              placeholder="Enter birth date"
               type={'text'}
               focusBorderColor="yellow.500"
             />
@@ -93,7 +91,6 @@ const getuser = async()=>{
               id="PICK_CITY"
               value={pick_city}
               onChange={e => setPick_city(e.target.value)}
-              placeholder="Enter Contact No"
               type={'text'}
               focusBorderColor="yellow.500"
             />
@@ -105,8 +102,7 @@ const getuser = async()=>{
               id="deliver_pieces"
               value={deliver_pieces}
               onChange={e => setDeliver_pieces(e.target.value)}
-              placeholder="Enter Permanent address"
-              type={'text'}
+               type={'text'}
               focusBorderColor="yellow.500"
             />
           </Box>
@@ -117,14 +113,14 @@ const getuser = async()=>{
               id="deliver_city"
               value={deliver_city}
               onChange={e => setDeliver_city(e.target.value)}
-              placeholder="Enter password"
+
               type={'text'}
               focusBorderColor="yellow.500"
             />
           </Box>
          
           <Button my="4" colorScheme={'yellow'} type="submit">
-           create user
+           UPDATE PRODUCT
           </Button>
         </form>
         </VStack>

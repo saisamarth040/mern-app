@@ -29,41 +29,28 @@ import { Calendar } from "react-date-range";
 import Header from "../Header";
 
 export default function Allproducts() {
-    const [data, setData] = React.useState([])
-    const [apiData, setApiData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [dateRange, setDateRange] = useState([
-      {
-        startDate: new Date(),
-        endDate: new Date(),
-        key: "selection",
-      },
-    ]);
-    const cookies = new Cookies();
-    const token = cookies.get('token')
-    const navigate = useNavigate();
+     // const api = process.env.REACT_APP_API_URL;
+     const api = "https://saisamarthlogistic.com";
     
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
-    const sumbmitHandler = async (e) => {
-        await axios.get(`${api}/admin/get_all_products`)
-            .then((e) => {
-                const d = e.data.products
-              var count = e.data.products.length
-                console.log(d)
-                setData(d)
-                
-            }).catch(error => {
-                console.log(error)
-            })
-    }
 
-    React.useEffect(() => {
-        sumbmitHandler();
-        
+    const navigate = useNavigate();
+  const [apiData, setApiData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+  const cookies = new Cookies();
+  const token = cookies.get("token");
+
+
+  React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${api}/getdata?token=${token}`);
+        const response = await axios.get(`${api}/admin/get_all_products`);
         setApiData(response.data.products);
         setFilteredData(response.data.products);
       } catch (error) {
@@ -71,32 +58,33 @@ export default function Allproducts() {
       }
     };
     fetchData();
+  }, []);
 
-    }, [])
+  const delete_handler = async (e) => {
+    const id = e.target.closest('[data-key]').getAttribute('data-key');
+    console.log(id)
+    const api = process.env.REACT_APP_API_URL;
+    await axios.get(`${api}/delete_product?id=${id}`)
+  }
 
-    const delete_handler = async (e) => {
-        const id = e.target.closest('[data-key]').getAttribute('data-key');
-        await axios.get(`${api}/admin/delete_product?id=${id}`)
-        sumbmitHandler();
-    }
-    const updateHnadler = (e) => {
-        const id = e.target.closest('[data-key]').getAttribute('data-key');
-        console.log(id)
-        navigate(`/admin/update_product/${id}`);
-    }
+  const updateHnadler = (e) => {
+    const id = e.target.closest('[data-key]').getAttribute('data-key');
+    console.log(id)
+    navigate(`${api}/update_product/${id}`);
+  }
 
-    const handleDateRangeChange = (ranges) => {
-      setDateRange([ranges.selection]);
-      const filtered = apiData.filter((data) => {
-        const createdAt = new Date(data.createdAt);
-        return (
-          createdAt >= ranges.selection.startDate &&
-          createdAt <= ranges.selection.endDate
-        );
-      });
-      setFilteredData(filtered);
-      console.log(filteredData)
-    };
+
+  const handleDateRangeChange = (ranges) => {
+    setDateRange([ranges.selection]);
+    const filtered = apiData.filter((data) => {
+      const createdAt = new Date(data.createdAt);
+      return (
+        createdAt >= ranges.selection.startDate &&
+        createdAt <= ranges.selection.endDate
+      );
+    });
+    setFilteredData(filtered);
+  };
     return (
         <>
         <Header />
@@ -112,7 +100,7 @@ export default function Allproducts() {
                                 PRODUCTS  HERE...
                             </Heading>
                 <Box  className="caleder" >
-        <DateRangePicker
+        <DateRangePicker mt={'5'}
           onChange={handleDateRangeChange}
           ranges={dateRange}
         />

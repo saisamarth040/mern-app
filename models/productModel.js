@@ -20,7 +20,7 @@ const productModel = new mongoose.Schema(
         },
         deliver_city: {
             type: String,
-            default:"noop",
+           
         },
         pick_time: {
             type: String,
@@ -32,8 +32,6 @@ const productModel = new mongoose.Schema(
         },
         deliver_time: {
             type: String,
-            default: Date.now,
-            require: [true, "pick date is required"],
         },
         file:{
             type: Object,

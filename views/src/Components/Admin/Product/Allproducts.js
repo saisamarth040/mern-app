@@ -45,18 +45,18 @@ export default function Allproducts() {
   ]);
   const cookies = new Cookies();
   const token = cookies.get("token");
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${api}/admin/get_all_products`);
+      setApiData(response.data.products);
+      setFilteredData(response.data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${api}/admin/get_all_products`);
-        setApiData(response.data.products);
-        setFilteredData(response.data.products);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+   
     fetchData();
   }, []);
 
@@ -64,13 +64,14 @@ export default function Allproducts() {
     const id = e.target.closest('[data-key]').getAttribute('data-key');
     console.log(id)
     const api = process.env.REACT_APP_API_URL;
-    await axios.get(`${api}/delete_product?id=${id}`)
+    await axios.get(`${api}/admin/delete_product?id=${id}`)
+    fetchData()
   }
 
   const updateHnadler = (e) => {
     const id = e.target.closest('[data-key]').getAttribute('data-key');
     console.log(id)
-    navigate(`${api}/update_product/${id}`);
+    navigate(`/admin/update_product/${id}`);
   }
 
 

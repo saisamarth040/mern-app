@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
+import Sidebar from '../Admin/Sidebar';
 
 const UserLogin = () => {
   const [name, setName] = useState('');
@@ -24,7 +25,6 @@ const UserLogin = () => {
       .then((data) => {
         cookies.set('token', data['data']['token'])
         const dataType = data.data.datas.user.type
-        console.log(dataType=="admin", dataType, data)
         if(dataType==="admin"){
           setLogined(true)
           dispatch({ type: "login" })
@@ -41,6 +41,7 @@ const UserLogin = () => {
   return (
     <>
       <Container h={'95vh'}>
+        <Sidebar />
         <VStack h={'full'} justifyContent="center" spacing={'16'}>
           <Heading children={'SAI SAMARTH LOGISTIC'} />
 

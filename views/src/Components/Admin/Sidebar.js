@@ -1,64 +1,94 @@
-import { Box, Button, HStack, Heading, Image, Link, VStack } from '@chakra-ui/react'
-import React from 'react'
-import logo from '../assest/img/logo144.png';
+import {
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  HStack,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react';
+import axios from 'axios';
+import React from 'react';
+import {  RiMenu5Fill } from 'react-icons/ri';
+import {  useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+const token = cookies.get('token')
+const LinkButton = ({ url = '/', title = 'Home', onClose }) => (
+  <Link onClick={onClose} to={url}>
+    <Button variant={'ghost'}>{title}</Button>
+  </Link>
+);
+
 const Sidebar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isAuthenticated } = useSelector((state) => state.root);
+  const navigate = useNavigate();
+
+const LogoutHander = async ()=>{
+  console.log("first")
+  const api = process.env.REACT_APP_API_URL;
+await axios.get(`${api}/signout?token=${token}`)
+cookies.remove("token")
+navigate('/login')
+}
   return (
     <>
-    
+      <Button
+        onClick={onOpen}
+        colorScheme={'yellow'}
+        width="12"
+        height={'12'}
+        rounded="full"
+        zIndex={'overlay'}
+        position={'fixed'}
+        top="6"
+        left="6"
+      >
+        <RiMenu5Fill />
+      </Button>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+      <DrawerOverlay  backdropFilter={"blur(4px)"}/>
+        <DrawerContent>
+        <DrawerHeader borderBottomWidth={'1px'}>nav</DrawerHeader>
+        <DrawerBody>
+        <VStack spacing={'4'} alignItems="flex-start">
+                  <>     
+                <Link onClick={onClose} to="/main">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                 INSERT
+                  </Button>
+                </Link>
+                <Link onClick={onClose} to="/">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                   LOGIN
+                  </Button>
+                </Link>
 
-
-<aside id="nav"  className="main-sidebar sidebar-dark-primary elevation-4">
-
-
-
-<div id="nav" className="sidebar">
-
-<Box className='header_nav'>
-<HStack className='nav'><a   href="/admin/dashboard"  ><Image className='logo' src={logo} />  SAI SAMARTH LOGISTIC</a></HStack>
-</Box>
-
-
-<VStack>
-                  <a  href="/admin/dashboard">
-                    <Button style={{fontSize:"19px"}} variant={'ghost'} colorScheme={'white'}>
-                      DASHBOARD
-                    </Button>
-                  </a>
-                  <a  href="/admin/create_user">
-                    <Button style={{fontSize:"19px"}} variant={'ghost'} colorScheme={'white'}>
-                      CREATE USER
-                    </Button>
-                  </a>
-                  <a  href="/admin/show_user">
-                    <Button style={{fontSize:"19px"}} variant={'ghost'} colorScheme={'white'}>
-                      VIEW USER
-                    </Button>
-                  </a>
-                  <a  href="/admin/show_products">
-                    <Button style={{fontSize:"19px"}} variant={'ghost'} colorScheme={'white'}>
-                      THIS MONTH 
-                    </Button>
-                  </a>
-                  <a  href=" /admin/show_all_products">
-                    <Button style={{fontSize:"19px"}} variant={'ghost'} colorScheme={'white'}>
-                      VIEW ALL PRODUCTS
-                    </Button>
-                  </a>
-                  /admin/show_all_products
                   
-</VStack>
-
-</div>
-
-</aside>
+            
+                    </>  
 
 
+        </VStack>
 
+
+
+        </DrawerBody>
+
+        </DrawerContent>
+
+
+
+      </Drawer>
 
 
 
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

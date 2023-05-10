@@ -5,11 +5,13 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Heading,
   HStack,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import Logo from '../Request/Logo';
 import React from 'react';
 import {  RiMenu5Fill } from 'react-icons/ri';
 import {  useSelector } from 'react-redux';
@@ -53,7 +55,14 @@ navigate('/login')
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay  backdropFilter={"blur(4px)"}/>
         <DrawerContent>
-        <DrawerHeader borderBottomWidth={'1px'}>nav</DrawerHeader>
+        <DrawerHeader borderBottomWidth={'1px'}>
+<HStack>
+<Link to="/admin/dashboard">
+<Logo /></Link>     
+<Heading size={'sm'}>
+SAI SAMARTH LOGISTIC
+</Heading>
+</HStack></DrawerHeader>
         <DrawerBody>
         <VStack spacing={'4'} alignItems="flex-start">
                   <>     
@@ -62,6 +71,7 @@ navigate('/login')
                  INSERT
                   </Button>
                 </Link>
+                
                 <Link onClick={onClose} to="/">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                    LOGIN

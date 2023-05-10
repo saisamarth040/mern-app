@@ -47,6 +47,7 @@ try {
         message: 'User not found',
       });
     }
+console.log("user data")    
     res.status(200).json({
       success: true,
       message: 'User deleted successfully',
@@ -165,4 +166,27 @@ exports.update_product = async (req, res, next) => {
       message: 'Server error',
     });
   }
+}
+
+
+exports.delete_Product = async (req, res, next) => {
+  const userId = req.query.id;
+try {
+  const deletedPoduct = await Product.findOneAndDelete({_id: userId});
+
+    if (!deletedPoduct) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product Not Found',
+      });
+    }
+console.log("user data")    
+    res.status(200).json({
+      success: true,
+      message: 'User Deleted Successfully',
+      data:deletedPoduct,
+    });
+} catch (error) {
+  console.log(error)
+}
 }

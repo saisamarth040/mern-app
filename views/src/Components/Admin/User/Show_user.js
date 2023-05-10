@@ -106,9 +106,9 @@ const Show_user = () => {
                                               {e.permanent_add.split(' ')[5]}{' '}
                                               {e.permanent_add.split(' ')[6]}{' '}
                                               {e.permanent_add.split(' ')[7]}{' '}
-                                              {e.permanent_add.split(' ')[8]}{' '}
                                               </p> 
                                               <p>
+                                              {e.permanent_add.split(' ')[8]}{' '}
                                               {e.permanent_add.split(' ')[10]}{' '}
                                               {e.permanent_add.split(' ')[11]}{' '}
                                               {e.permanent_add.split(' ')[12]}{' '}

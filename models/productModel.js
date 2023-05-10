@@ -23,7 +23,7 @@ const productModel = new mongoose.Schema(
            
         },
         pick_time: {
-            type: String,
+            type: Date,
             require: [true, "pick date is required"],
         },
         status: {
@@ -31,7 +31,7 @@ const productModel = new mongoose.Schema(
             require: [true, "status is required"],
         },
         deliver_time: {
-            type: String,
+            type: Date,
         },
         file:{
             type: Object,

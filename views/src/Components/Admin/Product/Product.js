@@ -31,8 +31,6 @@ export default function Product() {
         await axios.get(`${api}/admin/get_all_products`)
             .then((e) => {
                 const d = e.data.products
-                
-                console.log(d)
                 const a = d.filter((e) => {
                     const today = new Date();
                     const yyyy = today.getFullYear();
@@ -83,7 +81,7 @@ export default function Product() {
                 <ChakraProvider >
                     <Box className="SHow_user" w="99vw" m="5">
                         <TableContainer>
-                            <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'center'} size={'lg'}>
+                            <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'left'} size={'lg'}>
                                THIS MONTH PRODUCTS DATA HERE...
                             </Heading>
                             <table class="table  table-striped table-bordered">

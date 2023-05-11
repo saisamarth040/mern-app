@@ -45,25 +45,37 @@ export default function Allproducts() {
   ]);
   const cookies = new Cookies();
   const token = cookies.get("token");
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${api}/admin/get_all_products`);
-      setApiData(response.data.products);
-      setFilteredData(response.data.products);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const sumbmitHandler = async (e) => {
+    await axios.get(`${api}/admin/get_all_products`)
+        .then((e) => {
+            const d = e.data.products
+            const a = d.filter((e) => {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                let mm = today.getMonth() + 1;
+                if (mm < 10) mm = '0' + mm;
+                const dateNow = yyyy + "-" + mm;
+                const createDate = e.createdAt.toString().split("T")[0].slice(0, 7);
+                return dateNow === createDate;
+            })
+            const sortedData = [...a].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setApiData(d)
+            setFilteredData(d)
+            console.log(d)
+        }).catch(error => {
+            console.log(error)
+        })
+}
+  // setApiData(response.data.products);
+  // setFilteredData(response.data.products);
   React.useEffect(() => {
-   
-    fetchData();
+    sumbmitHandler();
   }, []);
 
   const delete_handler = async (e) => {
     const id = e.target.closest('[data-key]').getAttribute('data-key');
     await axios.get(`${api}/admin/delete_product?id=${id}`)
-    fetchData()
+    sumbmitHandler()
   }
 
   const updateHnadler = (e) => {
@@ -158,8 +170,8 @@ export default function Allproducts() {
                                              </p>
 
                                              </> : "--"}   </td>
-                                            <td className="text-center">  {e.pick_time ? e.pick_time.split(",")[0] : "--"}     </td>
-                                            <td className="text-center">  {e.pick_time ?(  e.pick_time.split(" ")[1].split(":")[0] +":" +e.pick_time.split(" ")[1].split(":")[1]+ " "+ e.pick_time.split(" ")[2] ): "--"}     </td>
+                                            <td className="text-center">  {e.pick_time ? e.pick_time.toString().split("T")[0] : "--"}     </td>
+                                            <td className="text-center">  {e.pick_time ?(  e.pick_time.toString().split("T")[1].split(".")[0] ): "--"}     </td>
                                             <td className="text-center"> {e.deliver_pieces ? e.deliver_pieces : "--"}   </td>
                                             <td>   {e.deliver_city ? <>
                                               <p>

@@ -25,12 +25,13 @@ export default function Product() {
     const cookies = new Cookies();
     const token = cookies.get('token')
     const navigate = useNavigate();
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
+    const api = process.env.REACT_APP_API_URL;
+    // const api = "https://saisamarthlogistic.com";
     const sumbmitHandler = async (e) => {
         await axios.get(`${api}/admin/get_all_products`)
             .then((e) => {
                 const d = e.data.products
+                
                 console.log(d)
                 const a = d.filter((e) => {
                     const today = new Date();
@@ -38,12 +39,12 @@ export default function Product() {
                     let mm = today.getMonth() + 1;
                     if (mm < 10) mm = '0' + mm;
                     const dateNow = yyyy + "-" + mm;
-                    const createDate = e.createdAt.split("T")[0].slice(0, 7);
+                    const createDate = e.createdAt.toString().split("T")[0].slice(0, 7);
                     return dateNow === createDate;
                 })
                 const sortedData = [...a].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setData(sortedData)
-                console.log(data)
+                console.log(sortedData)
             }).catch(error => {
                 console.log(error)
             })
@@ -71,9 +72,8 @@ export default function Product() {
         sumbmitHandler();
     }
     const updateHnadler = (e) => {
-        const id = e.target.closest('[data-key]').getAttribute('data-key');
-        console.log(id)
-        navigate(`/admin/update_product/${id}`);
+    //    console.log(id)
+    //     navigate(`/admin/update_product/${id}`);
     }
 
     return (
@@ -142,10 +142,10 @@ export default function Product() {
                                              </p>
 
                                              </>  : "--"}   </td>
-                                            <td className="text-center">  {e.pick_time ? e.pick_time.split(",")[0] : "--"}     </td>
-                                            <td className="text-center">  {e.pick_time ?(  e.pick_time.split(" ")[1].split(":")[0] +":" +e.pick_time.split(" ")[1].split(":")[1]+ " "+ e.pick_time.split(" ")[2] ): "--"}     </td>
+                                            <td className="text-center">  {e.pick_time ? e.pick_time.toString().split("T")[0] : "--"}     </td>
+                                            <td className="text-center">  {e.pick_time ?(  e.pick_time.toString().split("T")[1].split('.')[0] ): "--"}     </td>
 
-                                            <td className="text-center">  {e.pick_time ? checkDayOfWeek(e.pick_time) : "--"}     </td>
+                                            <td className="text-center">  {e.pick_time ? checkDayOfWeek(e.pick_time.toString()) : "--"}     </td>
                                             <td className="text-center"> {e.deliver_pieces ? e.deliver_pieces : "--"}   </td>
                                             <td>   {e.deliver_city ?  <>
                                               <p>
@@ -177,7 +177,7 @@ export default function Product() {
                                              </p>
 
                                              </>  : "--"} </td>
-                                            <td className="text-center">   {e.deliver_time ? e.deliver_time.split(",")[0] : "--"} </td>
+                                            <td className="text-center">    {e.deliver_time ? e.deliver_time.toString().split("T")[0] : "--"}   </td>
                                             <td className="text-center">  {e.deliver_time ? checkDayOfWeek(e.deliver_time) : "--"}     </td>
                                             <td className="text-center">  {e.file.url?  <Link  to={`${e.file.url}`}>VIEW</Link> : "--"} </td>
                                             <td>  {e._id ? (<>
@@ -188,7 +188,7 @@ export default function Product() {
                                                     </Button>
     
                                                   
-                                                        <Button onClick={updateHnadler} key={e._id} value={e._id} variant={'ghost'} colorScheme={'yellow'} data-key={e._id}>
+                                                        <Button onClick={updateHnadler}  value={e._id} variant={'ghost'} colorScheme={'yellow'} data-key={e._id}>
                                                             <AddIcon w={4} h={4} color="red.500" />
                                                         </Button>
                                                

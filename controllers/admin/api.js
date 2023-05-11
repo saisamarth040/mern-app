@@ -171,9 +171,11 @@ exports.update_product = async (req, res, next) => {
 
 exports.delete_Product = async (req, res, next) => {
   const userId = req.query.id;
+  console.log("objectobject")
+  console.log(userId)
 try {
   const deletedPoduct = await Product.findOneAndDelete({_id: userId});
-
+console.log(deletedPoduct)
     if (!deletedPoduct) {
       return res.status(404).json({
         success: false,

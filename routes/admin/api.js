@@ -11,10 +11,9 @@ router.post("/update_user",api.update_user)
 
 // products routes
 router.get("/get_all_products",api.getAllProducts)
-router.get("/delete_product",api.getAllProducts)
 router.get("/get_one_product",api.getOneProduct)
 router.post("/update_product",api.update_product)
-router.post("/delete_product",api.delete_Product)
+router.get("/delete_product",api.delete_Product)
 
 
 module.exports = router

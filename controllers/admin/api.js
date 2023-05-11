@@ -185,7 +185,7 @@ console.log(deletedPoduct)
 console.log("user data")    
     res.status(200).json({
       success: true,
-      message: 'User Deleted Successfully',
+      message: 'Product Deleted Successfully',
       data:deletedPoduct,
     });
 } catch (error) {

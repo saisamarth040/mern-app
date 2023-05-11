@@ -25,8 +25,8 @@ export default function Product() {
     const cookies = new Cookies();
     const token = cookies.get('token')
     const navigate = useNavigate();
-    const api = process.env.REACT_APP_API_URL;
-    // const api = "https://saisamarthlogistic.com";
+    // const api = process.env.REACT_APP_API_URL;
+    const api = "https://saisamarthlogistic.com";
     const sumbmitHandler = async (e) => {
         await axios.get(`${api}/admin/get_all_products`)
             .then((e) => {
@@ -72,8 +72,9 @@ export default function Product() {
         sumbmitHandler();
     }
     const updateHnadler = (e) => {
-    //    console.log(id)
-    //     navigate(`/admin/update_product/${id}`);
+        const id = e.target.closest('[data-key]').getAttribute('data-key');
+        console.log(id)
+        navigate(`/admin/update_product/${id}`);
     }
 
     return (
@@ -188,7 +189,7 @@ export default function Product() {
                                                     </Button>
     
                                                   
-                                                        <Button onClick={updateHnadler}  value={e._id} variant={'ghost'} colorScheme={'yellow'} data-key={e._id}>
+                                                        <Button onClick={updateHnadler} key={e._id} value={e._id} variant={'ghost'} colorScheme={'yellow'} data-key={e._id}>
                                                             <AddIcon w={4} h={4} color="red.500" />
                                                         </Button>
                                                

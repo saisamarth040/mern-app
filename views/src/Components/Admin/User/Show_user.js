@@ -78,6 +78,7 @@ const Show_user = () => {
                                     <th> CONTACT NO</th>
                                     <th>PASSWORD</th>
                                     <th> AADHAR NO </th>
+                                    <th> STATE </th>
                                     <th>ADDRESS</th>
                                     <th>ACTION</th>
                                 </tr>
@@ -94,6 +95,7 @@ const Show_user = () => {
                                         <td>  {e.contact_no ? e.contact_no : "--"}   </td>
                                         <td>  {e.password ? e.password : "--"}     </td>
                                         <td> {e.aadhar_no ? e.aadhar_no : "--"}   </td>
+                                        <td> {e.state ? e.state : "--"}   </td>
                                         <td>    {e.permanent_add ? (<> 
                                             <p>
                                               {e.permanent_add.split(' ')[0]}{' '}

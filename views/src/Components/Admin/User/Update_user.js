@@ -15,6 +15,7 @@ const Update_user = () => {
   const [permanent_add, setPermanent_add] = useState('');
   const [aadhar_no, setAadhar_no] = useState('');
   const [password, setPassword] = useState('');
+  const [state, setState] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -23,7 +24,8 @@ const Update_user = () => {
     contact_no,
     date_of_birth,
     permanent_add,
-    aadhar_no,id
+    aadhar_no,id,
+    state
   }
 
   // const api = process.env.REACT_APP_API_URL;
@@ -41,6 +43,7 @@ const getuser = async()=>{
     setAadhar_no(data.aadhar_no)
     setContact_no(data.contact_no)
     setPassword(data.password)
+    setState(data.state)
     setDate_of_birth(formattedDate)
   })
 }
@@ -102,6 +105,17 @@ const getuser = async()=>{
               value={contact_no}
               onChange={e => setContact_no(e.target.value)}
               placeholder="Enter Contact No"
+              type={'text'}
+              focusBorderColor="yellow.500"
+            />
+          </Box>
+          <Box my={'4'}>
+            <FormLabel htmlFor="State" children="State:" />
+            <Input
+              required
+              id="state"
+              value={state}
+              onChange={e => setState(e.target.value)}
               type={'text'}
               focusBorderColor="yellow.500"
             />

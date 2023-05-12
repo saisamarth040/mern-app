@@ -10,7 +10,11 @@ import {
     ChakraProvider,
     Heading,
     HStack,
-    Button
+    Button,
+    VStack,
+    FormLabel,
+    Input,
+    Stack
 } from '@chakra-ui/react'
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -25,6 +29,8 @@ export default function Product() {
     const cookies = new Cookies();
     const token = cookies.get('token')
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = React.useState('');
+const [searchResults, setSearchResults] = React.useState([]);
     // const api = process.env.REACT_APP_API_URL;
     const api = "https://saisamarthlogistic.com";
     const sumbmitHandler = async (e) => {
@@ -40,7 +46,12 @@ export default function Product() {
                     const createDate = e.createdAt.toString().split("T")[0].slice(0, 7);
                     return dateNow === createDate;
                 })
-                const sortedData = [...a].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                // const sortedData = [...a].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                const searchData = d.filter((product) => {
+
+                    return product.unique_no.toLowerCase().includes(searchTerm.toLowerCase());
+                  });
+                  const sortedData = [...searchData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setData(sortedData)
                 console.log(sortedData)
             }).catch(error => {
@@ -74,16 +85,34 @@ export default function Product() {
         console.log(id)
         navigate(`/admin/update_product/${id}`);
     }
-
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+        sumbmitHandler();
+      };
     return (
         <>
         <Header />
                 <ChakraProvider >
                     <Box className="SHow_user" w="99vw" m="5">
                         <TableContainer>
-                            <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'left'} size={'lg'}>
+                            <HStack w={'90%'} justify={"space-between"} m={'auto'} >
+                                  <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'left'} size={'lg'}>
                                THIS MONTH PRODUCTS DATA HERE...
                             </Heading>
+                           
+                            <Stack  direction="row" justify="center" align="center" >
+              <Heading size={'md'}>Search by Consignment No: </Heading>
+              <Input
+                type="text"
+                value={searchTerm} 
+                onChange={handleSearch}
+                placeholder="Search by unique_no"
+                focusBorderColor="yellow.500"
+              />
+            </Stack>
+                            </HStack>
+                          
+                           
                             <table class="table  table-striped table-bordered">
                                 <thead className="bg-primary-subtle">
                                     <tr>
@@ -97,6 +126,7 @@ export default function Product() {
                                         <th>DELIVER_PIECES</th>
                                         <th>TO CITY</th>
                                         <th>DELIVER DATE </th>
+                                        <th>DELIVER TIME </th>
                                         <th>DELIVER DAY </th>
                                         <th>VIEW BILL </th>
                                         <th>ACTION</th>
@@ -177,6 +207,7 @@ export default function Product() {
 
                                              </>  : "--"} </td>
                                             <td className="text-center">    {e.deliver_time ? e.deliver_time.toString().split("T")[0] : "--"}   </td>
+                                            <td className="text-center">  {e.deliver_time ?(  e.deliver_time.toString().split("T")[1].split('.')[0] ): "--"}     </td>
                                             <td className="text-center">  {e.deliver_time ? checkDayOfWeek(e.deliver_time) : "--"}     </td>
                                             <td className="text-center">  {e.file.url?  <Link  to={`${e.file.url}`}>VIEW</Link> : "--"} </td>
                                             <td>  {e._id ? (<>

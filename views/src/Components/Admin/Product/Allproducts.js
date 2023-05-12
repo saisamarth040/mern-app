@@ -12,7 +12,8 @@ import {
     HStack,
     Button,
     Input,
-    FormLabel
+    FormLabel,
+    Stack
 } from '@chakra-ui/react'
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
@@ -35,6 +36,8 @@ export default function Allproducts() {
 
     const navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchResults, setSearchResults] = React.useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [dateRange, setDateRange] = useState([
     {
@@ -49,19 +52,15 @@ export default function Allproducts() {
     await axios.get(`${api}/admin/get_all_products`)
         .then((e) => {
             const d = e.data.products
-            const a = d.filter((e) => {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                let mm = today.getMonth() + 1;
-                if (mm < 10) mm = '0' + mm;
-                const dateNow = yyyy + "-" + mm;
-                const createDate = e.createdAt.toString().split("T")[0].slice(0, 7);
-                return dateNow === createDate;
-            })
-            const sortedData = [...a].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setApiData(d)
-            setFilteredData(d)
-            console.log(d)
+           
+            const searchData = d.filter((product) => {
+
+              return product.unique_no.toLowerCase().includes(searchTerm.toLowerCase());
+            });
+            const sortedData = [...searchData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setApiData(sortedData)
+            setFilteredData(sortedData)
+            console.log(sortedData)
         }).catch(error => {
             console.log(error)
         })
@@ -96,14 +95,32 @@ export default function Allproducts() {
     });
     setFilteredData(filtered);
   };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    sumbmitHandler();
+  };
     return (
         <>
         <Header />
                 <ChakraProvider >
            
-                    <Heading className="SHOW_USER_HEADING" mt={'5'} my="4" textAlign={'center'} size={'lg'}>
-                                PRODUCTS  HERE...
+                <HStack w={'90%'} justify={"space-between"} m={'auto'} >
+                                  <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'left'} size={'lg'}>
+                              PRODUCTS DATA HERE...
                             </Heading>
+                           
+                            <Stack style={{marginTop:"4vh"}} mt={'20'}  direction="column" justify="center" align="center" >
+              <Heading  size={'md'}>Search by Consignment No: </Heading>
+              <Input
+                type="text"
+                value={searchTerm} 
+                onChange={handleSearch}
+                placeholder="Search by unique_no"
+                focusBorderColor="yellow.500"
+              />
+            </Stack>
+                            </HStack>
+                          
                 <Box  className="caleder" >
         <DateRangePicker mt={'5'}
           onChange={handleDateRangeChange}

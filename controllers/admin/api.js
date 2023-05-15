@@ -35,7 +35,7 @@ exports.signup = async (req, res, next) => {
     try {
      const {token} = req.query || req.body
      console.log(token)
-     const user = await User.findOne({ token }).exec()
+     const user = await User.findOne({ token:token })
      if (user) {
       return res.status(200).json(user);
       

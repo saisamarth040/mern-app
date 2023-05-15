@@ -30,7 +30,7 @@ const UserLogin = () => {
         if(dataType==="admin"){
           setLogined(true)
           dispatch({ type: "login" })
-          return navigate('/admin/dashboard')
+          return navigate('/admin/show_products')
         }
         navigate('/main')
       }).catch(error => {

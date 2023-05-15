@@ -51,8 +51,8 @@ exports.signup = async (req, res, next) => {
   }
   exports.getAllUSer = async (req, res, next) => {
     try {
-      const id = req.query.id || req.body.id
-      const user = await User.findById(id);
+     
+      const user = await User.find();
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;

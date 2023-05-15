@@ -36,13 +36,15 @@ const Pick = () => {
 
 
   const data = { pieces, city, unique_no, token }
-  const api = process.env.REACT_APP_API_URL;
-  // const api = "https://saisamarthlogistic.com";
+  // const api = process.env.REACT_APP_API_URL;
+  const api = "https://saisamarthlogistic.com";
 
   const getToken = async(e) =>{
     console.log("object")
+    console.log(token)
     await axios.get(`${api}/admin/getUserByToken?token=${token}`).then((e)=>{
       const data = e.data.data
+      console.log(e)
       console.log('object')
     })
   }

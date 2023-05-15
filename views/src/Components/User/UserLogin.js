@@ -25,6 +25,7 @@ const UserLogin = () => {
       .then((data) => {
        const token = data.data.datas.user.token
        console.log(token)
+     console.log(data)
        cookies.set('token', token);
         const dataType = data.data.datas.user.type
         if(dataType==="admin"){

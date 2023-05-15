@@ -37,8 +37,8 @@ const getuser = async()=>{
     const data = e.data.user;
     console.log(data)
     const inputDate = data.date_of_birth
+    console.log(inputDate)
     let formattedDate = formatDate(inputDate);
-    console.log(date_of_birth)
     console.log(formattedDate)
     setName(data.name)
     setToken(data.token)
@@ -47,7 +47,7 @@ const getuser = async()=>{
     setContact_no(data.contact_no)
     setPassword(data.password)
     setState(data.state)
-    setDate_of_birth(formattedDate)
+    setDate_of_birth(inputDate)
   })
 }
   const cookies = new Cookies();
@@ -184,7 +184,7 @@ const getuser = async()=>{
 export default Update_user
 
 function formatDate(inputDate) {
-  let parts = inputDate.split('/');
+  let parts = inputDate.split('-');
   let year = parts[2];
   let month = parts[1];
   let day = parts[0];

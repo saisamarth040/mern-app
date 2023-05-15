@@ -35,7 +35,7 @@ const Show_user = () => {
         await axios.get(`${api}/admin/get_all_user`)
             .then((e) => {
                 console.log(e)
-                setData(e.data.users)
+                setData(e.data.user)
                 console.log(data)
             }).catch(error => {
                 console.log(error)

@@ -33,13 +33,11 @@ exports.signup = async (req, res, next) => {
   };
   exports.getUserByToken = async (req,res,next)=>{
     try {
-      console.log("object")
      const {token} = req.query || req.body
      console.log(token)
-     const user = await User.findOne({ token }).exec();
+     const user = await User.findOne({ token }).exec()
      if (user) {
-    
-      return res.json(user);
+      return res.status(200).json(user);
       
     } else {
       // User not found
@@ -52,7 +50,7 @@ exports.signup = async (req, res, next) => {
   exports.getAllUSer = async (req, res, next) => {
     try {
      
-      const user = await User.find();
+      const user = await User.find().exec();
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;

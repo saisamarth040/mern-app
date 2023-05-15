@@ -46,7 +46,10 @@ const userModel = new mongoose.Schema(
             default: "user",
             required:false,
         },
-       
+        token: {
+            type: String,
+            required:false,
+        },
     },
     { timestamps: true }
 );

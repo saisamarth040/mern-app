@@ -84,7 +84,7 @@ SAI SAMARTH LOGISTIC
             <VStack mt={'3'} className='headerBody' spacing={'3'} alignItems="flex-center">
 
               <>
-              <Link   onClick={onClose} to="/admin/dashboard">
+              <Link   onClick={onClose} to="/admin/show_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   DESHBOARD
                   </Button>
@@ -101,11 +101,11 @@ SAI SAMARTH LOGISTIC
                   </Button>
                 </Link>
 
-                <Link onClick={onClose} to="/admin/show_products">
+                {/* <Link onClick={onClose} to="/admin/show_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
 THIS MONTH
                   </Button>
-                </Link>
+                </Link> */}
                 <Link onClick={onClose} to="/admin/show_all_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   VIEW ALL PRODUCTS

@@ -14,6 +14,6 @@ router.get("/get_all_products",api.getAllProducts)
 router.get("/get_one_product",api.getOneProduct)
 router.post("/update_product",api.update_product)
 router.get("/delete_product",api.delete_Product)
-
+router.get('/getUserByToken',api.getUserByToken)
 
 module.exports = router

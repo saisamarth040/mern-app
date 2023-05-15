@@ -33,7 +33,6 @@ const getuser = async()=>{
     setPick_city(data.pick_city);
     setDeliver_pieces(data.setDeliver_pieces);
     setDeliver_city(data.deliver_city);
-
   })
 }
   const cookies = new Cookies();

@@ -14,7 +14,7 @@ const UserLogin = () => {
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
   const cookies = new Cookies();
-  // const api = process.env.REACT_APP_API_URL;
+ // const api = process.env.REACT_APP_API_URL;
   const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
@@ -23,7 +23,9 @@ const UserLogin = () => {
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {
-        cookies.set('token', data['data']['token'])
+       const token = data.data.datas.user.token
+       console.log(token)
+       cookies.set('token', token);
         const dataType = data.data.datas.user.type
         if(dataType==="admin"){
           setLogined(true)

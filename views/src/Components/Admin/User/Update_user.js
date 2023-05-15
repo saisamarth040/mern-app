@@ -10,6 +10,7 @@ const Update_user = () => {
 
   const [logined, setLogined] = useState(false);
   const [name, setName] = useState('');
+  const [token, setToken] = useState('');
   const [contact_no, setContact_no] = useState('');
   const [date_of_birth,setDate_of_birth] = useState('');
   const [permanent_add, setPermanent_add] = useState('');
@@ -25,7 +26,8 @@ const Update_user = () => {
     date_of_birth,
     permanent_add,
     aadhar_no,id,
-    state
+    state,
+    token
   }
 
   // const api = process.env.REACT_APP_API_URL;
@@ -39,6 +41,7 @@ const getuser = async()=>{
     console.log(date_of_birth)
     console.log(formattedDate)
     setName(data.name)
+    setToken(data.token)
     setPermanent_add(data.permanent_add)
     setAadhar_no(data.aadhar_no)
     setContact_no(data.contact_no)
@@ -152,6 +155,18 @@ const getuser = async()=>{
               value={aadhar_no}
               onChange={e => setAadhar_no(e.target.value)}
               placeholder="Enter Aadhar number"
+              type={'text'}
+              focusBorderColor="yellow.500"
+            />
+          </Box>
+          <Box my={'4'}>
+            <FormLabel htmlFor="Token" children="Token" />
+            <Input
+              required
+              id="token"
+              value={token}
+              onChange={e => setToken(e.target.value)}
+              placeholder="Enter Token number"
               type={'text'}
               focusBorderColor="yellow.500"
             />

@@ -1,6 +1,6 @@
 import { Box, Button, Container, FormLabel, Heading, Input, VStack } from '@chakra-ui/react';
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
@@ -34,10 +34,21 @@ const Pick = () => {
     setPieces(e.target.value)
   }
 
-  const data = { pieces, city, unique_no, token }
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
 
+  const data = { pieces, city, unique_no, token }
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
+
+  const getToken = async(e) =>{
+    console.log("object")
+    await axios.get(`${api}/admin/getUserByToken?token=${token}`).then((e)=>{
+      const data = e.data.data
+      console.log('object')
+    })
+  }
+  useEffect(() => {
+    getToken()
+  }, [])
   const sumbmitHandler = async (e) => {
     try {
       e.preventDefault();

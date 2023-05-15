@@ -25,6 +25,7 @@ exports.signin = async (req, res, next) => {
       if (!admin) {
         return res.status(404).json({ message: "admin not found" });
       }
+      console.log("object")
       const token = jwt.sign({ id: admin.id }, "secretkey");
       const datas = { admin, token }
       res.cookie("accessToken", token, {

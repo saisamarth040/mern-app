@@ -40,12 +40,9 @@ const Pick = () => {
   const api = "https://saisamarthlogistic.com";
 
   const getToken = async(e) =>{
-    console.log("object")
-    console.log(token)
     await axios.get(`${api}/admin/getUserByToken?token=${token}`).then((e)=>{
-      const data = e.data.data
-      console.log(e)
-      console.log('object')
+      const data = e.data
+console.log(e.data)
     })
   }
   useEffect(() => {

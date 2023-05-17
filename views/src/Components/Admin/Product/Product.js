@@ -19,6 +19,8 @@ import {
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from 'react-router-dom';
+import { writeFile } from 'xlsx';
+import * as XLSX from 'xlsx';
 
 import { DeleteIcon, AddIcon, } from '@chakra-ui/icons'
 import Sidebar from "../Sidebar";
@@ -33,31 +35,44 @@ export default function Product() {
 const [searchResults, setSearchResults] = React.useState([]);
     // const api = process.env.REACT_APP_API_URL;
     const api = "https://saisamarthlogistic.com";
-    const sumbmitHandler = async (e) => {
-        await axios.get(`${api}/admin/get_all_products`)
-            .then((e) => {
-                const d = e.data.products
-                const a = d.filter((e) => {
-                    const today = new Date();
-                    const yyyy = today.getFullYear();
-                    let mm = today.getMonth() + 1;
-                    if (mm < 10) mm = '0' + mm;
-                    const dateNow = yyyy + "-" + mm;
-                    const createDate = e.createdAt.toString().split("T")[0].slice(0, 7);
-                    return dateNow === createDate;
-                })
-                // const sortedData = [...a].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                const searchData = d.filter((product) => {
+    const submitHandler = async (e) => {
+        await axios
+          .get(`${api}/admin/get_all_products`)
+          .then((response) => {
+            const allProducts = response.data.products;
+            const searchData = allProducts.filter((product) => {
+              const uniqueNo = product.unique_no.toLowerCase();
+              const searchTermLower = searchTerm.toLowerCase();
+              const uniqueNoParts = uniqueNo.split(" ");
+              return uniqueNoParts.some((part) => part.includes(searchTermLower));
+            });
+      
+            const sortedData = [...searchData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setData(sortedData);
 
-                    return product.unique_no.toLowerCase().includes(searchTerm.toLowerCase());
-                  });
-                  const sortedData = [...searchData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                setData(sortedData)
-                console.log(sortedData)
-            }).catch(error => {
-                console.log(error)
-            })
-    }
+            console.log(sortedData);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
+
+
+      const downloadExcel = () => {
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'data.xlsx';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      };
+      
     function checkDayOfWeek(dateString) {
         try {
           const date = new Date(dateString);
@@ -70,7 +85,7 @@ const [searchResults, setSearchResults] = React.useState([]);
       }
 
     React.useEffect(() => {
-        sumbmitHandler();
+        submitHandler();
     }, [])
 
     const delete_handler = async (e) => {
@@ -78,7 +93,7 @@ const [searchResults, setSearchResults] = React.useState([]);
         console.log(id)
        const data = await axios.get(`${api}/admin/delete_product?id=${id}`)
        console.log(data)
-        sumbmitHandler();
+       submitHandler();
     }
     const updateHnadler = (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
@@ -87,7 +102,7 @@ const [searchResults, setSearchResults] = React.useState([]);
     }
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
-        sumbmitHandler();
+        submitHandler();
       };
     return (
         <>
@@ -99,7 +114,7 @@ const [searchResults, setSearchResults] = React.useState([]);
                                   <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'left'} size={'lg'}>
                                THIS MONTH PRODUCTS DATA HERE...
                             </Heading>
-                           
+                            <button className="btn btn-primary" onClick={downloadExcel}>Download Excel</button>
                             <Stack  direction="row" justify="center" align="center" >
               <Heading size={'md'}>Search by Consignment No: </Heading>
               <Input

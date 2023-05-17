@@ -28,12 +28,12 @@ import Sidebar from "../Sidebar";
 import { useState } from "react";
 import { Calendar } from "react-date-range";
 import Header from "../Header";
+import { writeFile } from 'xlsx';
+import * as XLSX from 'xlsx';
 
 export default function Allproducts() {
      // const api = process.env.REACT_APP_API_URL;
      const api = "https://saisamarthlogistic.com";
-    
-
     const navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -65,6 +65,23 @@ export default function Allproducts() {
             console.log(error)
         })
 }
+
+
+const downloadExcel = () => {
+  const workbook = XLSX.utils.book_new();
+  const worksheet = XLSX.utils.json_to_sheet(filteredData);
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+  const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'data.xlsx';
+  link.click();
+  window.URL.revokeObjectURL(url);
+};
+
+
   // setApiData(response.data.products);
   // setFilteredData(response.data.products);
   React.useEffect(() => {
@@ -108,7 +125,7 @@ export default function Allproducts() {
                                   <Heading className="SHOW_HEAD" mt={'5'} my="4" textAlign={'left'} size={'lg'}>
                               PRODUCTS DATA HERE...
                             </Heading>
-                           
+                            <button className="btn btn-primary" onClick={downloadExcel}>Download Excel</button>
                             <Stack style={{marginTop:"4vh"}} mt={'20'}  direction="column" justify="center" align="center" >
               <Heading  size={'md'}>Search by Consignment No: </Heading>
               <Input

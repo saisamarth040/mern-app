@@ -33,6 +33,12 @@ const productModel = new mongoose.Schema(
         deliver_time: {
             type: Date,
         },
+        pick_art: {
+            type: String,
+        },
+        deliver_art: {
+            type: String,
+        },
         file:{
             type: Object,
             default: {

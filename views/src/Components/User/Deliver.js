@@ -1,10 +1,11 @@
-import {  Image, Box, Button, Container, FormLabel, Heading, Input, VStack, HStack } from '@chakra-ui/react';
+import {  Image, Box, Button, Container, FormLabel, Heading, Input, VStack, HStack, Select } from '@chakra-ui/react';
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import '../styleSheets/style.css';
+import { MpState } from './state/mp';
 
 export const fileUploadCss = {
   cursor: 'pointer',
@@ -29,7 +30,8 @@ const Deliver = () => {
   const [file, setFile] = useState(null);
   const [imagePrev, setImagePrev] = useState('');
   const [image, setImage] = useState('');
-
+  const [art,setArt] = useState('');
+  const [myState,setMyState] = useState('');
   const changeUnique_no = (e) => {
     setUnique_no(e.target.value)
   }
@@ -39,6 +41,17 @@ const Deliver = () => {
   const changePieces = (e) => {
     setPieces(e.target.value)
   }
+  const getToken = async(e) =>{
+    await axios.get(`${api}/admin/getUserByToken?token=${token}`).then((e)=>{
+      const data = e.data
+      console.log(e)
+      setMyState(data.state)
+      console.log(myState)
+    })
+  }
+  useEffect(() => {
+    getToken()
+  }, [])
 
   // const api = process.env.REACT_APP_API_URL;
   const api = "https://saisamarthlogistic.com";
@@ -74,6 +87,45 @@ const Deliver = () => {
       }, 2000);
     }
   };
+  const  changeHander =(e)=>{
+    console.log(e)
+      }
+      function renderTableRows() {
+         if(myState.trim()==="MP"){
+          return (
+            <Box my={'4'}>
+            <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+            <Select onChange={e => setArt(e.target.value)} >
+            <option  value="" selected hidden disable> SELECT_ART_CENTER </option>
+      {MpState.map((state) => (
+     
+        <option  onChange={changeHander}  key={state.value}  value={state.value}>
+          {state.label}
+        </option>
+      ))}
+    </Select>
+          </Box>
+          );
+                    }
+                    if(myState.trim()==="Lakshadweep"){
+                      return (
+                        <Box my={'4'}>
+                        <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+                        <Select onChange={e => setArt(e.target.value)} >
+                        <option  value="" selected hidden disable> SELECT_STATE </option>
+                  {MpState.map((state) => (
+                 
+                    <option  onChange={changeHander}  key={state.value}  value={state.value}>
+                      {state.label}
+                    </option>
+                  ))}
+                </Select>
+                      </Box>
+                      );
+                                }
+                    
+      }
+
 
   return (
     <>
@@ -118,6 +170,7 @@ const Deliver = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
+            {renderTableRows()}
             <Box className='avtar1' my={'2'}>
               <FormLabel htmlFor="chooseAvatar" children="CHOOSE FILE" />
               <Input

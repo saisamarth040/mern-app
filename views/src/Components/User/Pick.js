@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import { MpState } from './state/mp';
+import { UtdState } from './state/utd';
 export const fileUploadCss = {
   cursor: 'pointer',
   marginLeft: '-5%',
@@ -24,7 +25,7 @@ const Pick = () => {
   const [pieces, setPieces] = useState("");
   const [city, setCity] = useState("");
   const [err, setErr] = useState(null);
-  const [state,setState] = useState('');
+  const [art,setArt] = useState('');
   const [myState,setMyState] = useState('');
 
   const changeUnique_no = (e) => {
@@ -38,13 +39,14 @@ const Pick = () => {
   }
 
 
-  const data = { pieces, city, unique_no, token,state }
+  const data = { pieces, city, unique_no, token,art }
   // const api = process.env.REACT_APP_API_URL;
   const api = "https://saisamarthlogistic.com";
 
   const getToken = async(e) =>{
     await axios.get(`${api}/admin/getUserByToken?token=${token}`).then((e)=>{
       const data = e.data
+      console.log(e)
       setMyState(data.state)
       console.log(myState)
     })
@@ -70,14 +72,12 @@ const Pick = () => {
     console.log(e)
       }
       function renderTableRows() {
-        console.log(myState.trim()==="Lakshadweep")
-        console.log(myState,"")
-         if(myState.trim()=="Lakshadweep"){
+         if(myState.trim()==="MP"){
           return (
             <Box my={'4'}>
             <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
-            <Select onChange={e => setState(e.target.value)} >
-            <option  value="" selected hidden disable> SELECT_STATE </option>
+            <Select onChange={e => setArt(e.target.value)} >
+            <option  value="" selected hidden disable> SELECT_ART_CENTER </option>
       {MpState.map((state) => (
      
         <option  onChange={changeHander}  key={state.value}  value={state.value}>
@@ -88,7 +88,23 @@ const Pick = () => {
           </Box>
           );
                     }
-        
+                    if(myState.trim()==="Lakshadweep"){
+                      return (
+                        <Box my={'4'}>
+                        <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+                        <Select onChange={e => setArt(e.target.value)} >
+                        <option  value="" selected hidden disable> SELECT_STATE </option>
+                  {MpState.map((state) => (
+                 
+                    <option  onChange={changeHander}  key={state.value}  value={state.value}>
+                      {state.label}
+                    </option>
+                  ))}
+                </Select>
+                      </Box>
+                      );
+                                }
+                    
       }
 
   return (
@@ -134,7 +150,7 @@ const Pick = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
-            {/* {renderTableRows()} */}
+            {renderTableRows()}
             <Box my="3"> {err && err} </Box>
             <Button my="2" colorScheme={'yellow'} type="submit">
               SUBMIT

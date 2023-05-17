@@ -1,4 +1,4 @@
-exports.ChhState = [
+exports.UtdState = [
     { value: "CHD", label: "Coronation Hospital, Dehradun " },
     { value: "Haldwani", label: "Haldwani" },
     { value: "Pithoragrh", label: "Pithoragrh" },

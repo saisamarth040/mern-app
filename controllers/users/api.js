@@ -6,6 +6,7 @@ exports.product_pick = async (req,res,next)=>{
   const unique_no = req.body.unique_no;
   const pieces = req.body.pieces;
   const city = req.body.city;
+  const art = req.body.art;
   const status = "PICK"
   const formattedDate = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
   try {
@@ -19,6 +20,7 @@ exports.product_pick = async (req,res,next)=>{
       pick_city: city,
       status: status,
       pick_time: formattedDate,
+      pick_art:art,
     });
     return res.status(200).json({ message: "Product Create Successfully" });
   } catch (error) {
@@ -30,6 +32,7 @@ exports.product_deliver = async (req,res,next)=>{
   const unique_no = req.body.unique_no;
   const pieces = req.body.pieces;
   const city = req.body.city;
+  const art = req.body.art;
   const status = "DELIVER"
   const formattedDate = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
   try {
@@ -50,6 +53,7 @@ return res.status(501).json("Product Already Delived")
       deliver_pieces:pieces,
       deliver_time:formattedDate,
       deliver_city:city,
+      deliver_art:art,
       file:{
         public_id:mycloud.public_id,
         url:mycloud.secure_url,

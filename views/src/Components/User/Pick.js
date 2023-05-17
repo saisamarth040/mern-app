@@ -1,9 +1,10 @@
-import { Box, Button, Container, FormLabel, Heading, Input, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, FormLabel, Heading, Input, Select, VStack } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
+import { MpState } from './state/mp';
 export const fileUploadCss = {
   cursor: 'pointer',
   marginLeft: '-5%',
@@ -23,6 +24,8 @@ const Pick = () => {
   const [pieces, setPieces] = useState("");
   const [city, setCity] = useState("");
   const [err, setErr] = useState(null);
+  const [state,setState] = useState('');
+  const [myState,setMyState] = useState('');
 
   const changeUnique_no = (e) => {
     setUnique_no(e.target.value)
@@ -35,14 +38,15 @@ const Pick = () => {
   }
 
 
-  const data = { pieces, city, unique_no, token }
+  const data = { pieces, city, unique_no, token,state }
   // const api = process.env.REACT_APP_API_URL;
   const api = "https://saisamarthlogistic.com";
 
   const getToken = async(e) =>{
     await axios.get(`${api}/admin/getUserByToken?token=${token}`).then((e)=>{
       const data = e.data
-console.log(e.data)
+      setMyState(data.state)
+      console.log(myState)
     })
   }
   useEffect(() => {
@@ -62,7 +66,30 @@ console.log(e.data)
       setErr(error.response.data)
     }
   }
-
+  const  changeHander =(e)=>{
+    console.log(e)
+      }
+      function renderTableRows() {
+        console.log(myState.trim()==="Lakshadweep")
+        console.log(myState,"")
+         if(myState.trim()=="Lakshadweep"){
+          return (
+            <Box my={'4'}>
+            <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+            <Select onChange={e => setState(e.target.value)} >
+            <option  value="" selected hidden disable> SELECT_STATE </option>
+      {MpState.map((state) => (
+     
+        <option  onChange={changeHander}  key={state.value}  value={state.value}>
+          {state.label}
+        </option>
+      ))}
+    </Select>
+          </Box>
+          );
+                    }
+        
+      }
 
   return (
     <>
@@ -107,6 +134,7 @@ console.log(e.data)
                 focusBorderColor="yellow.500"
               />
             </Box>
+            {/* {renderTableRows()} */}
             <Box my="3"> {err && err} </Box>
             <Button my="2" colorScheme={'yellow'} type="submit">
               SUBMIT

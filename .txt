@@ -276,3 +276,17 @@ option{
 
   /* header */
 2023-05-11T16:24:59.000Z
+
+<tbody>
+              <tr>
+              
+                <td>
+                  <select value={state} onChange={(event) => changeHander(event.target.value)}>
+                    {MpState.map((state) => (
+                      <option value={state.value} key={state.value}>{state.label}</option>
+                    ))}
+                  </select>
+                </td>
+                {/* ... */}
+              </tr>
+            </tbody>

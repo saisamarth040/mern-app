@@ -50,16 +50,43 @@ const [searchResults, setSearchResults] = React.useState([]);
             const sortedData = [...searchData].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             setData(sortedData);
 
-            console.log(sortedData);
+            // console.log(sortedData);
           })
           .catch((error) => {
             console.log(error);
           });
       };
 
+      const exdata = async () => {
+        const esxl = await Promise.all(data.map(async (e, i) => {
+          return {
+            "SNO": `${i + 1}`,
+            "CONSIGNMENTS_NO": `${e.unique_no}`,
+            "PICK PIECES": `${e.pick_pieces}`,
+            "PICK CITY": `${e.pick_city}`,
+            "PICK DATE": `${e.pick_time?.toString().split("T")[0] ?? ""}`,
+            "PICK TIME": `${e.pick_time?.toString().split("T")[1]?.split('.')[0] ?? ""}`,
+            "PICK DAY": `${checkDayOfWeek(e.pick_time?.toString()) ?? ""}`,
+            "DELIVER PIECES": `${e.deliver_pieces}`,
+            "DELIVER CITY": `${e.deliver_city}`,
+            "DELIVER DATE": `${e.deliver_time?.toString().split("T")[0] ?? ""}`,
+            "DELIVER TIME": `${e.deliver_time?.toString().split("T")[1]?.split('.')[0] ?? ""}`,
+            "DELIVER DAY": `${checkDayOfWeek(e.deliver_time?.toString()) ?? ""}`,
+            "BILL": `${e.file?.url ?? ""}`
+          };
+        }));
+      
+        console.log(esxl);
+        return esxl;
+      };
+      React.useEffect(() => {
+        submitHandler();
+        exdata()
+    }, [])
+      
 
-
-      const downloadExcel = () => {
+      const downloadExcel = async() => {
+        const data = await exdata();
         const workbook = XLSX.utils.book_new();
         const worksheet = XLSX.utils.json_to_sheet(data);
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
@@ -84,9 +111,7 @@ const [searchResults, setSearchResults] = React.useState([]);
         }
       }
 
-    React.useEffect(() => {
-        submitHandler();
-    }, [])
+   
 
     const delete_handler = async (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
@@ -131,7 +156,7 @@ const [searchResults, setSearchResults] = React.useState([]);
                             <table class="table  table-striped table-bordered">
                                 <thead className="bg-primary-subtle">
                                     <tr>
-                                        <th>NO.</th>
+                                        <th>S.NO</th>
                                         <th>CONSIGNMENTS_NO</th>
                                         <th> PICK_PIECES</th>
                                         <th>FROM CITY</th>

@@ -170,7 +170,7 @@ const Deliver = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
-            {renderTableRows()}
+           
             <Box className='avtar1' my={'2'}>
               <FormLabel htmlFor="chooseAvatar" children="CHOOSE FILE" />
               <Input

@@ -65,11 +65,34 @@ export default function Allproducts() {
             console.log(error)
         })
 }
+const exdata = async () => {
+  const esxl = await Promise.all(filteredData.map(async (e, i) => {
+    return {
+      "SNO": `${i + 1}`,
+      "CONSIGNMENTS_NO": `${e.unique_no}`,
+      "PICK PIECES": `${e.pick_pieces}`,
+      "PICK CITY": `${e.pick_city}`,
+      "PICK DATE": `${e.pick_time?.toString().split("T")[0] ?? ""}`,
+      "PICK TIME": `${e.pick_time?.toString().split("T")[1]?.split('.')[0] ?? ""}`,
+      "PICK DAY": `${checkDayOfWeek(e.pick_time?.toString()) ?? ""}`,
+      "DELIVER PIECES": `${e.deliver_pieces}`,
+      "DELIVER CITY": `${e.deliver_city}`,
+      "DELIVER DATE": `${e.deliver_time?.toString().split("T")[0] ?? ""}`,
+      "DELIVER TIME": `${e.deliver_time?.toString().split("T")[1]?.split('.')[0] ?? ""}`,
+      "DELIVER DAY": `${checkDayOfWeek(e.deliver_time?.toString()) ?? ""}`,
+      "BILL": `${e.file?.url ?? ""}`
+    };
+  }));
 
+  console.log(esxl);
+  return esxl;
+};
 
-const downloadExcel = () => {
+const downloadExcel = async() => {
+const data = await exdata();
+  
   const workbook = XLSX.utils.book_new();
-  const worksheet = XLSX.utils.json_to_sheet(filteredData);
+  const worksheet = XLSX.utils.json_to_sheet(data);
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
   const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
   const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -100,6 +123,16 @@ const downloadExcel = () => {
     navigate(`/admin/update_product/${id}`);
   }
 
+  function checkDayOfWeek(dateString) {
+    try {
+      const date = new Date(dateString);
+      const options = { weekday: 'long' };
+      const day = date.toLocaleDateString('en-US', options);
+      return day;
+    } catch (error) {
+      return 'Invalid date format';
+    }
+  }
 
   const handleDateRangeChange = (ranges) => {
     setDateRange([ranges.selection]);
@@ -152,15 +185,18 @@ const downloadExcel = () => {
                             <table class="table  table-striped table-bordered">
                                 <thead className="bg-primary-subtle">
                                     <tr>
-                                        <th>NO.</th>
+                                    <th>S.NO</th>
                                         <th>CONSIGNMENTS_NO</th>
                                         <th> PICK_PIECES</th>
                                         <th>FROM CITY</th>
                                         <th>PICK DATE </th>
                                         <th>PICK TIME </th>
-                                        <th> DELIVER_PIECES</th>
+                                        <th>PICK DAY </th>
+                                        <th>DELIVER_PIECES</th>
                                         <th>TO CITY</th>
                                         <th>DELIVER DATE </th>
+                                        <th>DELIVER TIME </th>
+                                        <th>DELIVER DAY </th>
                                         <th>VIEW BILL </th>
                                         <th>ACTION</th>
                                     </tr>
@@ -174,7 +210,7 @@ const downloadExcel = () => {
                                             <td className="text-center">  {i + 1}  </td>
                                             <td >   {e.unique_no ? e.unique_no : '--'}   </td>
                                             <td className="text-center">   {e.pick_pieces ? e.pick_pieces : "--"}  </td>
-                                            <td>  {e.pick_city ? <>
+                                            <td>  {e.pick_city ?  <>
                                               <p>
                                               {e.pick_city.split(' ')[0]}{' '}
                                               {e.pick_city.split(' ')[1]}{' '}
@@ -203,11 +239,13 @@ const downloadExcel = () => {
                                               {e.pick_city.split(' ')[14]}{' '}
                                              </p>
 
-                                             </> : "--"}   </td>
+                                             </>  : "--"}   </td>
                                             <td className="text-center">  {e.pick_time ? e.pick_time.toString().split("T")[0] : "--"}     </td>
-                                            <td className="text-center">  {e.pick_time ?(  e.pick_time.toString().split("T")[1].split(".")[0] ): "--"}     </td>
+                                            <td className="text-center">  {e.pick_time ?(  e.pick_time.toString().split("T")[1].split('.')[0] ): "--"}     </td>
+
+                                            <td className="text-center">  {e.pick_time ? checkDayOfWeek(e.pick_time.toString()) : "--"}     </td>
                                             <td className="text-center"> {e.deliver_pieces ? e.deliver_pieces : "--"}   </td>
-                                            <td>   {e.deliver_city ? <>
+                                            <td>   {e.deliver_city ?  <>
                                               <p>
                                               {e.deliver_city.split(' ')[0]}{' '}
                                               {e.deliver_city.split(' ')[1]}{' '}
@@ -236,9 +274,11 @@ const downloadExcel = () => {
                                               {e.deliver_city.split(' ')[14]}{' '}
                                              </p>
 
-                                             </> : "--"} </td>
-                                            <td className="text-center">   {e.deliver_time ? e.deliver_time.split(",")[0] : "--"} </td>
-                                            <td className="text-center">  VIEW </td>
+                                             </>  : "--"} </td>
+                                            <td className="text-center">    {e.deliver_time ? e.deliver_time.toString().split("T")[0] : "--"}   </td>
+                                            <td className="text-center">  {e.deliver_time ?(  e.deliver_time.toString().split("T")[1].split('.')[0] ): "--"}     </td>
+                                            <td className="text-center">  {e.deliver_time ? checkDayOfWeek(e.deliver_time) : "--"}     </td>
+                                            <td className="text-center">  {e.file.url?  <Link  to={`${e.file.url}`}>VIEW</Link> : "--"} </td>
                                             <td>  {e._id ? (<>
                                                 <p>
     
@@ -246,11 +286,11 @@ const downloadExcel = () => {
                                                         <DeleteIcon key={e._id} w={4} h={4} color="red.500" />
                                                     </Button>
     
-                                                    
+                                                  
                                                         <Button onClick={updateHnadler} key={e._id} value={e._id} variant={'ghost'} colorScheme={'yellow'} data-key={e._id}>
                                                             <AddIcon w={4} h={4} color="red.500" />
                                                         </Button>
-                                                
+                                               
                                                 </p>
                                             </>
                                             ) : "--"}  </td>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import '../styleSheets/style.css';
 import { MpState } from './state/mp';
+import { citys } from './city';
 
 export const fileUploadCss = {
   cursor: 'pointer',
@@ -158,7 +159,7 @@ const Deliver = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
-            <Box my={'2'} >
+            {/* <Box my={'2'} >
               <FormLabel htmlFor="City" children="CITY_NAME:" />
               <Input
                 required
@@ -169,8 +170,19 @@ const Deliver = () => {
                 type={'text'}
                 focusBorderColor="yellow.500"
               />
-            </Box>
-           
+            </Box> */}
+           <Box my={'4'}>
+            <FormLabel htmlFor="SELECT CITY" children="SELECT_CITY:" />
+            <Select onChange={changeCity} >
+            <option  value="" selected hidden disable> SELECT_CITY </option>
+      {citys.map((city) => (
+     
+        <option  onChange={changeHander}  key={city.value}  value={city.value}>
+          {city.label}
+        </option>
+      ))}
+    </Select>
+          </Box>
             <Box className='avtar1' my={'2'}>
               <FormLabel htmlFor="chooseAvatar" children="CHOOSE FILE" />
               <Input

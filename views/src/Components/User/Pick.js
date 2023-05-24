@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 import { MpState } from './state/mp';
 import { UtdState } from './state/utd';
+import { citys } from './city';
 export const fileUploadCss = {
   cursor: 'pointer',
   marginLeft: '-5%',
@@ -138,7 +139,7 @@ const Pick = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
-            <Box my={'2'} >
+            {/* <Box my={'2'} >
               <FormLabel htmlFor="City" children="CITY_NAME:" />
               <Input
                 required
@@ -149,7 +150,19 @@ const Pick = () => {
                 type={'text'}
                 focusBorderColor="yellow.500"
               />
-            </Box>
+            </Box> */}
+            <Box my={'4'}>
+            <FormLabel htmlFor="SELECT CITY" children="SELECT_CITY:" />
+            <Select onChange={changeCity} >
+            <option  value="" selected hidden disable> SELECT_CITY </option>
+      {citys.map((city) => (
+     
+        <option  onChange={changeHander}  key={city.value}  value={city.value}>
+          {city.label}
+        </option>
+      ))}
+    </Select>
+          </Box>
             {renderTableRows()}
             <Box my="3"> {err && err} </Box>
             <Button my="2" colorScheme={'yellow'} type="submit">

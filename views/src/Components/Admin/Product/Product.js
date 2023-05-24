@@ -17,6 +17,7 @@ import {
     Stack
 } from '@chakra-ui/react'
 import axios from "axios";
+
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from 'react-router-dom';
 import { writeFile } from 'xlsx';
@@ -25,6 +26,7 @@ import * as XLSX from 'xlsx';
 import { DeleteIcon, AddIcon, } from '@chakra-ui/icons'
 import Sidebar from "../Sidebar";
 import Header from "../Header";
+import { cityStateMapping } from "./CityState";
 
 export default function Product() {
     const [data, setData] = React.useState([])
@@ -57,8 +59,18 @@ const [searchResults, setSearchResults] = React.useState([]);
           });
       };
 
+
+ 
+
       const exdata = async () => {
         const esxl = await Promise.all(data.map(async (e, i) => {
+          const mystate = getStateOfCity(e.deliver_city);
+          let result;
+          if (mystate && mystate) {
+            result = mystate;
+          } else {
+            result = e.deliver_city;
+          }
           return {
             "SNO": `${i + 1}`,
             "CONSIGNMENTS_NO": `${e.unique_no}`,
@@ -68,7 +80,7 @@ const [searchResults, setSearchResults] = React.useState([]);
             "PICK TIME": `${e.pick_time?.toString().split("T")[1]?.split('.')[0] ?? ""}`,
             "PICK DAY": `${checkDayOfWeek(e.pick_time?.toString()) ?? ""}`,
             "DELIVER PIECES": `${e.deliver_pieces}`,
-            "DELIVER CITY": `${e.deliver_city}`,
+            "DELIVER CITY": result,
             "DELIVER DATE": `${e.deliver_time?.toString().split("T")[0] ?? ""}`,
             "DELIVER TIME": `${e.deliver_time?.toString().split("T")[1]?.split('.')[0] ?? ""}`,
             "DELIVER DAY": `${checkDayOfWeek(e.deliver_time?.toString()) ?? ""}`,
@@ -285,4 +297,102 @@ const [searchResults, setSearchResults] = React.useState([]);
     
             </>
     );
+}
+
+function getStateOfCity(city) {
+  if (typeof city !== 'string' || city.trim().length === 0) {
+    return null;
+  }
+
+  const cityStateMapping = new Map([
+    ["ALWAR", "JAIPUR"],
+    ["BHARATPUR", "JAIPUR"],
+    ["CHURU", "JAIPUR"],
+    ["DHOLPUR", "JAIPUR"],
+    ["HNUMANGARH", "JAIPUR"],
+    ["JAIPUR", "JAIPUR"],
+    ["JHUNJHUNU", "JAIPUR"],
+    ["KARAULI", "JAIPUR"],
+    ["SIKAR", "JAIPUR"],
+    ["SRI GANGANAGAR", "JAIPUR"],
+    ["TONK", "JAIPUR"],
+    ["MGH JAIPUR", "JAIPUR"],
+    ["JNU JAIPUR", "JAIPUR"],
+    ["NIMS JAIPUR", "JAIPUR"],
+
+    ["AJMER", "JODHPUR"],
+    ["BARMER", "JODHPUR"],
+    ["BIKANER", "JODHPUR"],
+    ["PALI", "JODHPUR"],
+    ["JALORE", "JODHPUR"],
+    ["JODHPUR", "JODHPUR"],
+    ["NAGAUR", "JODHPUR"],
+    ["SIROHI", "JODHPUR"],
+
+    ["BHILWARA", "UDAIPUR"],
+    ["BANSWARA", "UDAIPUR"],
+    ["CHHITORGARH", "UDAIPUR"],
+    ["DUNGARPUR", "UDAIPUR"],
+    ["SAGWARA DUNGARPUR", "UDAIPUR"],
+    ["JHALAWAR", "UDAIPUR"],
+    ["KOTA", "UDAIPUR"],
+    ["RAJSAMAND", "UDAIPUR"],
+    ["UDAIPUR", "UDAIPUR"],
+    ["PIMS UDAIPUR", "UDAIPUR"],
+    ["GMCG UDAIPUR", "UDAIPUR"],
+    ["AIIMS UDAIPUR", "UDAIPUR"],
+    ["AIMS RAJSAMAND", "UDAIPUR"],
+
+    ["Coronation Hospital, Dehradun ", "IGMC HP"],
+    ["Haldwani", "IGMC HP"],
+    ["Pithoragrh", "IGMC HP"],
+    ["AIIMS Rishikesh,", "IGMC HP"],
+    ["Mahant Indresh Hospital,Dehradun", "IGMC HP"],
+    ["Roorkee", "IGMC HP"],
+    ["Himalayan Institute Hospital,Dehradun", "IGMC HP"],
+    
+    ["BHOPAL", "MGM INDORE"],
+    ["BARWANI", "MGM INDORE"],
+    ["BALAGHAT", "MGM INDORE"],
+    ["BURHANPUR", "MGM INDORE"],
+    ["DEWAS", "MGM INDORE"],
+    ["DHAR", "MGM INDORE"],
+    ["GWALIOR", "MGM INDORE"],
+    ["INDORE", "MGM INDORE"],
+    ["JABALPUR", "MGM INDORE"],
+    ["KHANDWA", "MGM INDORE"],
+    ["KHARGONE", "MGM INDORE"],
+    ["NEEMUCH", "MGM INDORE"],
+    ["RATLAM", "MGM INDORE"],
+    ["REWA", "MGM INDORE"],
+    ["SAGAR", "MGM INDORE"],
+    ["SEONI", "MGM INDORE"],
+    ["SHIVPURI", "MGM INDORE"],
+    ["UJJAIN", "MGM INDORE"],
+    ["MORENA", "MGM INDORE"],
+    ["SIDHI", "MGM INDORE"],
+    ["SHAHDOL", "MGM INDORE"],
+    ["CHHINDWARA", "MGM INDORE"],
+
+    ["BALAGHAT", "PJLN RAIPUR"],
+    ["JABALPUR", "PJLN RAIPUR"],
+    ["SEONI", "PJLN RAIPUR"],
+
+    ["DURG", "PJLN RAIPUR"],
+    ["BILASPUR", "PJLN RAIPUR"],
+    ["SARGUJA", "PJLN RAIPUR"],
+    ["BASTAR", "PJLN RAIPUR"],
+    ["KORBA", "PJLN RAIPUR"],
+    ["RAIGARH", "PJLN RAIPUR"],
+    ["RAJNANDGAON", "PJLN RAIPUR"],
+    
+
+    // Add more city-state mappings as needed
+  ]);
+
+  const state = [...cityStateMapping.entries()]
+    .filter(([key, value]) => key.toUpperCase() === city.toUpperCase())
+    .map(([key, value]) => value);
+
+  return state.length > 0 ? state[0] : null;
 }

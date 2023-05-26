@@ -84,6 +84,11 @@ SAI SAMARTH LOGISTIC
             <VStack mt={'3'} className='headerBody' spacing={'3'} alignItems="flex-center">
 
               <>
+              <Link   onClick={onClose} to="/main">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  Insert
+                  </Button>
+                </Link>
               <Link   onClick={onClose} to="/admin/show_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   DESHBOARD

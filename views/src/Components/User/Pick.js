@@ -73,7 +73,7 @@ const Pick = () => {
     console.log(e)
       }
       function renderTableRows() {
-         if(myState.trim()==="MP"){
+         if(myState.trim()==="MP" || myState.trim()==="madhya pradesh"){
           return (
             <Box my={'4'}>
             <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />

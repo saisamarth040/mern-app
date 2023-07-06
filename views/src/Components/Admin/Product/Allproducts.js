@@ -32,8 +32,8 @@ import { writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
 
 export default function Allproducts() {
-     // const api = process.env.REACT_APP_API_URL;
-     const api = "https://saisamarthlogistic.com";
+     const api = process.env.REACT_APP_API_URL;
+    //  const api = "https://saisamarthlogistic.com";
     const navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');

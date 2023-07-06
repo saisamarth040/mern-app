@@ -23,8 +23,8 @@ const Update_Product = () => {
     deliver_city,id
   }
 
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
 const getuser = async()=>{
   await axios.get(`${api}/admin/get_one_product?id=${id}`).then((e)=>{
     const data = e.data.product;

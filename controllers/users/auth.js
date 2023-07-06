@@ -10,6 +10,8 @@ const secretKey = "secretkey";
         return res.status(404).json({ message: "User Not Found" });
       }
       const token = user.token;
+      console.log(user.password)
+      console.log(password)
       if(user.password===password){
         const datas = { user, token }
         res.cookie("accessToken", token, {

@@ -10,6 +10,8 @@ import {
   HStack,
   useDisclosure,
   VStack,
+
+
 } from '@chakra-ui/react';
 import Logo from '../Request/Logo';
 import axios from 'axios';
@@ -87,6 +89,11 @@ SAI SAMARTH LOGISTIC
               <Link   onClick={onClose} to="/main">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   Insert
+                  </Button>
+                </Link>
+                <Link   onClick={onClose} to="/admin/genarate">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  GENERATE
                   </Button>
                 </Link>
               <Link   onClick={onClose} to="/admin/show_products">

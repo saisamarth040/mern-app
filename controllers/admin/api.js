@@ -2,6 +2,7 @@ const User = require("../../models/userModel");
 const Product = require("../../models/productModel");
 const { generateRandomPassword,generateToken } = require("../../utils/helperutils");
 const jwt = require("jsonwebtoken");
+const Consignment = require("../../models/consignmentModel");
 const secretKey = "secretkey";
 
 exports.signup = async (req, res, next) => {
@@ -211,3 +212,78 @@ try {
 });
 }
 }
+
+
+exports.search = async (req,res,next)=>{
+  try {
+   const body = req.body;
+   const data = await Product.find({ unique_no: { $regex: `^${body.text}` } });
+     res.json(data)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+exports.searchDetails = async (req,res,next)=>{
+  try {
+   const body = req.body;
+   const data = await Product.find({ unique_no: { $regex: `^${body.inputValue}` } });
+    res.json(data)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
+
+exports.genareteConsignment = async (req, res, next) => {
+  try {
+    const { uniqueNO, quantity, state } = req.body;
+
+    const uniqueNumbers = [];
+    const numberRegex = /\d+$/; // Match the number at the end of the string
+
+    // Extract the numeric part from uniqueNO
+    const baseNumber = parseInt(uniqueNO.match(numberRegex)[0]);
+
+    for (let i = 0; i < quantity; i++) {
+      const number = (baseNumber + i).toString().padStart(4, '0');
+      const generatedUniqueNO = uniqueNO.replace(numberRegex, number);
+      uniqueNumbers.push(generatedUniqueNO);
+    }
+
+    const consignments = await Promise.all(
+      uniqueNumbers.map(async (uniqueNumber) => {
+        const consignment = new Consignment({ unique_no: uniqueNumber, state: state });
+        return await consignment.save();
+      })
+    );
+
+    res.json(consignments);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};exports.getConsignment = async (req, res, next) => {
+  try {
+    const { token } = req.query || req.body;
+    console.log(token);
+    const user = await User.findOne({ token: token });
+    if (user) {
+      console.log(user.state);
+      const consignments = await Consignment.find({ state: user.state }).sort({ unique_no: 1 });
+      if (!consignments) {
+        return res.status(404).json({ message: 'Consignments not found' });
+      }
+      return res.status(200).json({ message: 'Consignments', consignments });
+    } else {
+      // User not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};

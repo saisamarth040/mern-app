@@ -36,7 +36,7 @@ return (
           </Heading>
         </VStack>
       </Box>
-      <Link to="/insert">
+      <Link to="/main">
         <Button variant={'ghost'}>GO TO  RESPONSE PAGE</Button>
       </Link>
 

@@ -17,20 +17,20 @@ import Allproducts from './Components/Admin/Product/Allproducts';
 import Update_Product from './Components/Admin/Product/Update_Product';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './Components/ProtectedRoute';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
+import Genarate from './Components/Admin/Genarate';
 function App() {
   const { isAuthenticated } = useSelector((state) => state.root);
 
   return (
     <>
-   
 
-   
     <Routes>
       <Route path='/' element={<UserLogin/>} />
       <Route path='/main' element={<Main/>} />
       <Route path='/pick' element={<Pick/>} />
       <Route path='/deliver' element={<Deliver />} />
-     <Route path='/sucees' element={<Sucees />} />
+     <Route path='/success' element={<Sucees />} />
      <Route path='/error' element={<Failed />} />
 
      {/* <Route
@@ -99,7 +99,8 @@ function App() {
      <Route path='/admin/show_products' element={<Product />} />
      <Route path='/admin/show_all_products' element={<Allproducts />} />
      <Route path='/admin/update_product/:id' element={<Update_Product />} />
-
+     <Route path='/admin/genarate' element={<Genarate />} />
+     
     
     
     </Routes> 

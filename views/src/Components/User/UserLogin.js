@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
-import Sidebar from '../Admin/Sidebar';
+import Navbar from '../Admin/Navbar';
 
 const UserLogin = () => {
   const [name, setName] = useState('');
@@ -14,8 +14,8 @@ const UserLogin = () => {
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
   const cookies = new Cookies();
- // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+ const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
 
   const sumbmitHandler = async (e) => {
     e.preventDefault();
@@ -43,8 +43,8 @@ const UserLogin = () => {
 
   return (
     <>
-      <Container h={'95vh'}>
-        <Sidebar />
+     <Navbar />
+      <Container h={'85vh'}>
         <VStack h={'full'} justifyContent="center" spacing={'16'}>
           <Heading children={'SAI SAMARTH LOGISTIC'} />
 

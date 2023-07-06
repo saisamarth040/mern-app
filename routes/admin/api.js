@@ -15,5 +15,9 @@ router.get("/get_one_product",api.getOneProduct)
 router.post("/update_product",api.update_product)
 router.get("/delete_product",api.delete_Product)
 router.get('/getUserByToken',api.getUserByToken)
+router.post("/search", api.search);
+router.post("/searchdetails", api.searchDetails);
+router.post("/genarete_staet_consignment_no", api.genareteConsignment);
+router.get("/getConsignment", api.getConsignment);
 
 module.exports = router

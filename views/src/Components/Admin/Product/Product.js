@@ -35,8 +35,8 @@ export default function Product() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = React.useState('');
 const [searchResults, setSearchResults] = React.useState([]);
-    const api = process.env.REACT_APP_API_URL;
-    // const api = "https://saisamarthlogistic.com";
+    // const api = process.env.REACT_APP_API_URL;
+    const api = "https://saisamarthlogistic.com";
     const submitHandler = async (e) => {
         await axios
           .get(`${api}/admin/get_all_products`)

@@ -31,8 +31,8 @@ console.log(e)
   const cookies = new Cookies();
   const sumbmitHandler = async (e) => {
     e.preventDefault();
-    const api = process.env.REACT_APP_API_URL;
-    // const api = "https://saisamarthlogistic.com";
+    // const api = process.env.REACT_APP_API_URL;
+    const api = "https://saisamarthlogistic.com";
     await axios.post(`${api}/admin/create_user`,data ,{
       headers: { 'Content-Type': 'application/json' }
     })

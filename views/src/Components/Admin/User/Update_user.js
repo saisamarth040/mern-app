@@ -30,8 +30,8 @@ const Update_user = () => {
     token
   }
 
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+  const api = process.env.REACT_APP_API_URL;
+  // const api = "https://saisamarthlogistic.com";
 const getuser = async()=>{
   axios.get(`${api}/admin/get_one_user?id=${id}`).then((e)=>{
     const data = e.data.user;

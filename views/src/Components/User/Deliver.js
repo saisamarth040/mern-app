@@ -73,7 +73,8 @@ const Deliver = () => {
     setUnique_no(e.target.value);
   };
 
-  const api = process.env.REACT_APP_API_URL;
+  // const api = process.env.REACT_APP_API_URL;
+  const api = "https://saisamarthlogistic.com";
 
   const changeImage = (e) => {
     const file = e.target.files[0];

@@ -34,7 +34,8 @@ const consignmentChange = (e)=>{
   };
 
   const data = { pieces, city, unique_no, token, art };
-  const api = process.env.REACT_APP_API_URL;
+  // const api = process.env.REACT_APP_API_URL;
+  const api = "https://saisamarthlogistic.com";
 
   const getToken = async () => {
     try {

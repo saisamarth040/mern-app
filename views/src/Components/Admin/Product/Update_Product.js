@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
 import Sidebar from '../Sidebar';
 import Header from '../Header';
+import { apiurl } from '../../../store';
 const Update_Product = () => {
 
   const [unique_no, setUnique_no] = useState('');
@@ -23,10 +24,8 @@ const Update_Product = () => {
     deliver_city,id
   }
 
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
 const getuser = async()=>{
-  await axios.get(`${api}/admin/get_one_product?id=${id}`).then((e)=>{
+  await axios.get(`${apiurl}/admin/get_one_product?id=${id}`).then((e)=>{
     const data = e.data.product;
     setUnique_no(data.unique_no);
     setPick_pieces(data.pick_pieces);
@@ -38,7 +37,7 @@ const getuser = async()=>{
   const cookies = new Cookies();
   const sumbmitHandler = async (e) => {
     e.preventDefault();
-    await axios.post(`${api}/admin/update_product`,data ,{
+    await axios.post(`${apiurl}/admin/update_product`,data ,{
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {

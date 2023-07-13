@@ -22,17 +22,17 @@ import Cookies from "universal-cookie";
 import Sidebar from '../Sidebar';
 import '../../styleSheets/style.css'
 import Header from "../Header";
+import { apiurl } from "../../../store";
 const Show_user = () => {
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [data, setData] = React.useState([])
     const cookies = new Cookies();
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
+
     const token = cookies.get('token')
     const sumbmitHandler = async (e) => {
         console.log(token)
-        await axios.get(`${api}/admin/get_all_user`)
+        await axios.get(`${apiurl}/admin/get_all_user`)
             .then((e) => {
                 console.log(e)
                 setData(e.data.user)
@@ -46,7 +46,7 @@ const Show_user = () => {
     const delete_handler = async (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-        await axios.get(`${api}/admin/delete_user?id=${id}`)
+        await axios.get(`${apiurl}/admin/delete_user?id=${id}`)
         sumbmitHandler();
     }
 

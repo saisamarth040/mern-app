@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
 import Sidebar from '../Sidebar';
 import Header from '../Header';
+import { apiurl } from '../../../store';
 const Update_user = () => {
 
   const [logined, setLogined] = useState(false);
@@ -30,10 +31,8 @@ const Update_user = () => {
     token
   }
 
-  const api = process.env.REACT_APP_API_URL;
-  // const api = "https://saisamarthlogistic.com";
 const getuser = async()=>{
-  axios.get(`${api}/admin/get_one_user?id=${id}`).then((e)=>{
+  axios.get(`${apiurl}/admin/get_one_user?id=${id}`).then((e)=>{
     const data = e.data.user;
     console.log(data)
     const inputDate = data.date_of_birth
@@ -53,7 +52,7 @@ const getuser = async()=>{
   const cookies = new Cookies();
   const sumbmitHandler = async (e) => {
     e.preventDefault();
-    await axios.post(`${api}/admin/update_user`,data ,{
+    await axios.post(`${apiurl}/admin/update_user`,data ,{
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {

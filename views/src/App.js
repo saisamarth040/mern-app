@@ -19,6 +19,8 @@ import { useSelector } from 'react-redux';
 import ProtectedRoute from './Components/ProtectedRoute';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import Genarate from './Components/Admin/Genarate';
+import AssignCNoteNumbers from './Components/Admin/AssignCNoteNumbers';
+import AssignValueForCity from './Components/Admin/AssignValueForCity';
 function App() {
   const { isAuthenticated } = useSelector((state) => state.root);
 
@@ -100,6 +102,8 @@ function App() {
      <Route path='/admin/show_all_products' element={<Allproducts />} />
      <Route path='/admin/update_product/:id' element={<Update_Product />} />
      <Route path='/admin/genarate' element={<Genarate />} />
+     <Route path='/admin/assign_cnote_no' element={<AssignCNoteNumbers />} />
+     <Route path='/admin/assign_city' element={<AssignValueForCity />} />
      
     
     

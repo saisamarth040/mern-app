@@ -19,5 +19,11 @@ router.post("/search", api.search);
 router.post("/searchdetails", api.searchDetails);
 router.post("/genarete_staet_consignment_no", api.genareteConsignment);
 router.get("/getConsignment", api.getConsignment);
+router.get("/getOneConsignment", api.getOneConsignment);
+router.post("/assignCNoteNumbers", api.assignCNoteNumbers)
+router.post("/assign_for_city", api.AssignForCity)
+router.get("/getOneConsignmentState", api.getOneConsignmentState)
+router.get("/getOneConsignmentForState", api.getOneConsignmentForState)
+
 
 module.exports = router

@@ -27,6 +27,7 @@ import { DeleteIcon, AddIcon, } from '@chakra-ui/icons'
 import Sidebar from "../Sidebar";
 import Header from "../Header";
 import { cityStateMapping } from "./CityState";
+import { apiurl } from "../../../store";
 
 export default function Product() {
     const [data, setData] = React.useState([])
@@ -35,11 +36,10 @@ export default function Product() {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = React.useState('');
 const [searchResults, setSearchResults] = React.useState([]);
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
+ 
     const submitHandler = async (e) => {
         await axios
-          .get(`${api}/admin/get_all_products`)
+          .get(`${apiurl}/admin/get_all_products`)
           .then((response) => {
             const allProducts = response.data.products;
             const searchData = allProducts.filter((product) => {
@@ -128,7 +128,7 @@ const [searchResults, setSearchResults] = React.useState([]);
     const delete_handler = async (e) => {
         const id = e.target.closest('[data-key]').getAttribute('data-key');
         console.log(id)
-       const data = await axios.get(`${api}/admin/delete_product?id=${id}`)
+       const data = await axios.get(`${apiurl}/admin/delete_product?id=${id}`)
        console.log(data)
        submitHandler();
     }

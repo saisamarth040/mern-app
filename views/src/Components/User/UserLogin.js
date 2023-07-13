@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
 import Navbar from '../Admin/Navbar';
+import { apiurl } from '../../store';
 
 const UserLogin = () => {
   const [name, setName] = useState('');
@@ -14,12 +15,11 @@ const UserLogin = () => {
   const [err, setErr] = useState(null);
   const navigate = useNavigate();
   const cookies = new Cookies();
-//  const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+
 
   const sumbmitHandler = async (e) => {
     e.preventDefault();
-    await axios.post(`${api}/signin`, { name, password }, {
+    await axios.post(`${apiurl}/signin`, { name, password }, {
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {

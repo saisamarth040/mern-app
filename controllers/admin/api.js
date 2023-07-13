@@ -3,6 +3,10 @@ const Product = require("../../models/productModel");
 const { generateRandomPassword,generateToken } = require("../../utils/helperutils");
 const jwt = require("jsonwebtoken");
 const Consignment = require("../../models/consignmentModel");
+const SetConsignment = require("../../models/SetConsignmentModel");
+const SetConsignmentForCity = require("../../models/SetConsignmentModelCity");
+
+
 const secretKey = "secretkey";
 
 exports.signup = async (req, res, next) => {
@@ -32,6 +36,7 @@ exports.signup = async (req, res, next) => {
       res.status(501).json({ message: error.message });
     }
   };
+
   exports.getUserByToken = async (req,res,next)=>{
     try {
      const {token} = req.query || req.body
@@ -224,6 +229,7 @@ exports.search = async (req,res,next)=>{
     next(error)
   }
 }
+
 exports.searchDetails = async (req,res,next)=>{
   try {
    const body = req.body;
@@ -238,7 +244,7 @@ exports.searchDetails = async (req,res,next)=>{
 
 exports.genareteConsignment = async (req, res, next) => {
   try {
-    const { uniqueNO, quantity, state } = req.body;
+    const { uniqueNO, quantity } = req.body;
 
     const uniqueNumbers = [];
     const numberRegex = /\d+$/; // Match the number at the end of the string
@@ -254,18 +260,19 @@ exports.genareteConsignment = async (req, res, next) => {
 
     const consignments = await Promise.all(
       uniqueNumbers.map(async (uniqueNumber) => {
-        const consignment = new Consignment({ unique_no: uniqueNumber, state: state });
+        const consignment = new Consignment({ unique_no: uniqueNumber });
         return await consignment.save();
       })
     );
-
     res.json(consignments);
   } catch (error) {
     console.log(error);
     res.json(error);
     next(error);
   }
-};exports.getConsignment = async (req, res, next) => {
+};
+
+exports.getConsignment = async (req, res, next) => {
   try {
     const { token } = req.query || req.body;
     console.log(token);
@@ -281,6 +288,138 @@ exports.genareteConsignment = async (req, res, next) => {
       // User not found
       return res.status(404).json({ error: 'User not found' });
     }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};
+
+
+exports.getOneConsignment = async (req, res, next) => {
+  try {
+    const { token } = req.query || req.params;
+    console.log(token,"FVDbgfb");
+    console.log(req.query, req.params)
+    const user = await User.findOne({ token: token });
+    if (user) {
+      console.log(user.state);
+      const consignments = await Consignment.findOne().sort({ unique_no: 1 });
+
+      if (!consignments) {
+        return res.status(404).json({ message: 'Consignments not found' });
+      }
+      return res.status(200).json({ message: 'Consignments', consignments });
+    } else {
+      // User not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};
+
+exports.assignCNoteNumbers = async (req, res, next) => {
+  try {
+    const { c_note, quantity, state } = req.body;
+
+    const uniqueNumbers = [];
+    const numberRegex = /\d+$/; // Match the number at the end of the string
+
+    // Extract the numeric part from uniqueNO
+    const baseNumber = parseInt(c_note.match(numberRegex)[0]);
+
+    for (let i = 0; i < quantity; i++) {
+      const number = (baseNumber + i).toString().padStart(4, '0');
+      const generatedUniqueNO = c_note.replace(numberRegex, number);
+      uniqueNumbers.push(generatedUniqueNO);
+    }
+
+    // Delete existing consignments from the Consignment table
+    await Consignment.deleteMany({ unique_no: { $in: uniqueNumbers } });
+
+    const consignments = await Promise.all(
+      uniqueNumbers.map(async (uniqueNumber) => {
+        const setConsignment = new SetConsignment({ unique_no: uniqueNumber,state:state });
+        return await setConsignment.save();
+      })
+    );
+    res.json(consignments);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};
+
+exports.AssignForCity = async (req, res, next) => {
+  try {
+    const { c_note, quantity, city, state } = req.body;
+
+    const uniqueNumbers = [];
+    const numberRegex = /\d+$/; // Match the number at the end of the string
+ console.log(req.body)
+    // Extract the numeric part from uniqueNO
+    const baseNumber = parseInt(c_note.match(numberRegex)[0]);
+
+    for (let i = 0; i < quantity; i++) {
+      const number = (baseNumber + i).toString().padStart(4, '0');
+      const generatedUniqueNO = c_note.replace(numberRegex, number);
+      uniqueNumbers.push(generatedUniqueNO);
+    }
+
+    // Delete existing Setconsignments from the Consignment table
+    await SetConsignment.deleteMany({ unique_no: { $in: uniqueNumbers } });
+
+    const consignments = await Promise.all(
+      uniqueNumbers.map(async (uniqueNumber) => {
+        const setConsignmentCity = new SetConsignmentForCity({ unique_no: uniqueNumber,state:state, city:city });
+        return await setConsignmentCity.save();
+      })
+    );
+    res.json(consignments);
+  } catch (error) {
+  console.log(error);
+  res.json(error);
+  next(error);
+  }
+}
+
+exports.getOneConsignmentState = async (req, res, next) => {
+  try {
+    const { token } = req.query || req.params;
+    const user = await User.findOne({ token: token });
+    if (user) {
+      console.log(user.state);
+      const consignments = await SetConsignment.findOne().sort({ unique_no: 1 });
+
+      if (!consignments) {
+        return res.status(404).json({ message: 'Consignments not found' });
+      }
+      return res.status(200).json({ message: 'Consignments', consignments });
+    } else {
+      // User not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};
+
+exports.getOneConsignmentForState = async (req, res, next) => {
+  try {
+    const { city } = req.query || req.params;
+   
+      const consignments = await SetConsignmentForCity.find({city:city}).sort({ unique_no: 1 });
+      if (!consignments) {
+        return res.status(404).json({ message: 'Consignments not found' });
+      }
+      return res.status(200).json({ message: 'Consignments', consignments });
+   
   } catch (error) {
     console.log(error);
     res.json(error);

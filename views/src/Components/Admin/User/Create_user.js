@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
 import { states } from './states';
 import Header from '../Header';
+import { apiurl } from '../../../store';
 
 const Create_user = () => {
 
@@ -31,9 +32,8 @@ console.log(e)
   const cookies = new Cookies();
   const sumbmitHandler = async (e) => {
     e.preventDefault();
-    // const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
-    await axios.post(`${api}/admin/create_user`,data ,{
+   
+    await axios.post(`${apiurl}/admin/create_user`,data ,{
       headers: { 'Content-Type': 'application/json' }
     })
       .then((data) => {

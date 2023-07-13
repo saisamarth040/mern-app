@@ -30,10 +30,10 @@ import { Calendar } from "react-date-range";
 import Header from "../Header";
 import { writeFile } from 'xlsx';
 import * as XLSX from 'xlsx';
+import { apiurl } from "../../../store";
 
 export default function Allproducts() {
-    //  const api = process.env.REACT_APP_API_URL;
-     const api = "https://saisamarthlogistic.com";
+   
     const navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -49,7 +49,7 @@ export default function Allproducts() {
   const cookies = new Cookies();
   const token = cookies.get("token");
   const sumbmitHandler = async (e) => {
-    await axios.get(`${api}/admin/get_all_products`)
+    await axios.get(`${apiurl}/admin/get_all_products`)
         .then((e) => {
             const d = e.data.products
            
@@ -120,7 +120,7 @@ const data = await exdata();
 
   const delete_handler = async (e) => {
     const id = e.target.closest('[data-key]').getAttribute('data-key');
-    await axios.get(`${api}/admin/delete_product?id=${id}`)
+    await axios.get(`${apiurl}/admin/delete_product?id=${id}`)
     sumbmitHandler()
   }
 

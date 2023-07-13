@@ -6,26 +6,25 @@ import Cookies from 'universal-cookie';
 import { useDispatch } from "react-redux";
 import Header from '../Admin/Header';
 import { states } from './User/states';
+import { apiurl } from '../../store';
 const Genarate = () => {
     const [uniqueNO, setUniqueNO] = useState('');
     const [logined, setLogined] = useState(false);
-  const [state,setState] = useState('');
+  // const [state,setState] = useState('');
     const [quantity, setQuantity] = useState('');
     const dispatch = useDispatch();
     const [err, setErr] = useState(null);
     const navigate = useNavigate();
     const cookies = new Cookies();
-  //  const api = process.env.REACT_APP_API_URL;
-    const api = "https://saisamarthlogistic.com";
   
     const sumbmitHandler = async (e) => {
       e.preventDefault();
-      await axios.post(`${api}/admin/genarete_staet_consignment_no`, { uniqueNO, quantity , state }, {
+      await axios.post(`${apiurl}/admin/genarete_staet_consignment_no`, { uniqueNO, quantity  }, {
         headers: { 'Content-Type': 'application/json' }
       })
         .then((data) => {
           console.log(data)
-          navigate('/sucees')
+          navigate('/success')
         }).catch(error => {
           navigate("/error")
           setErr(error.response.data.message)
@@ -69,7 +68,7 @@ const Genarate = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
-            <Box my={'4'}>
+            {/* <Box my={'4'}>
             <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
             <Select onChange={e => setState(e.target.value)} >
             <option  value="" selected hidden disable> SELECT_STATE </option>
@@ -80,7 +79,7 @@ const Genarate = () => {
         </option>
       ))}
     </Select>
-          </Box>
+          </Box> */}
             <HStack>
               <Button variant={'ghost'} colorScheme={'yellow'}>
                 {err && err}

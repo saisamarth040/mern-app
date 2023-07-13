@@ -96,6 +96,16 @@ SAI SAMARTH LOGISTIC
                   GENERATE
                   </Button>
                 </Link>
+                <Link   onClick={onClose} to="/admin/assign_cnote_no">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  ASSIGN_CNOTE_NO
+                  </Button>
+                </Link>
+                <Link   onClick={onClose} to="/admin/assign_city">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  ASSIGN_FOR_CITY
+                  </Button>
+                </Link>
               <Link   onClick={onClose} to="/admin/show_products">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   DESHBOARD

@@ -10,18 +10,9 @@ const consignmentModel = new mongoose.Schema(
             required: [true, "consignment no is required"],
         },
       
-        state:{
-            type: String,
-            required:true,
-        },
-       
     },
     { timestamps: true }
 );
-
-
-
-
 
 const consignment = mongoose.model("consignment", consignmentModel);
 

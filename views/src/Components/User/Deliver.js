@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { MpState } from './state/mp';
 import { citys } from './city';
+import { apiurl } from '../../store';
 
 const fileUploadCss = {
   cursor: 'pointer',
@@ -31,9 +32,14 @@ const Deliver = () => {
   const [art, setArt] = useState('');
   const [consignment, setConsigmnet] = useState([]);
   const [myState, setMyState] = useState('');
+  const [consignments, setConsignments] = useState("");
 
   const changeUnique_no = (e) => {
     setUnique_no(e.target.value);
+  };
+  const consignmentHandler = (event) => {
+    console.log(event.target)
+    setUnique_no(event.target.value);
   };
 
   const changeCity = (e) => {
@@ -46,9 +52,18 @@ const Deliver = () => {
 
   const getToken = async () => {
     try {
-      const response = await axios.get(`${api}/admin/getUserByToken?token=${token}`);
+      const response = await axios.get(`${apiurl}/admin/getUserByToken?token=${token}`);
       const data = response.data;
       setMyState(data.state);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${apiurl}/admin/getOneConsignmentForState?city=${city}`);
+      setConsignments(response.data.consignments);
+      console.log(response.data.consignments);
     } catch (error) {
       console.log(error);
     }
@@ -57,24 +72,24 @@ const Deliver = () => {
   useEffect(() => {
     getToken();
     fetchData();
-  }, []);
+  }, [city]); // Fetch data whenever the selected city changes
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${api}/admin/getConsignment?token=${token}`);
-      setConsigmnet(response.data.consignments);
-      console.log(response.data.consignments);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(`${apiurl}/admin/getConsignment?token=${token}`);
+  //     setConsigmnet(response.data.consignments);
+  //     console.log(response.data.consignments);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const consignmentChange = (e) => {
     setUnique_no(e.target.value);
   };
 
-  // const api = process.env.REACT_APP_API_URL;
-  const api = "https://saisamarthlogistic.com";
+
 
   const changeImage = (e) => {
     const file = e.target.files[0];
@@ -98,7 +113,7 @@ const Deliver = () => {
       formData.append('city', city);
       formData.append('token', token);
 
-      await axios.post(`${api}/deliver`, formData, {
+      await axios.post(`${apiurl}/deliver`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       navigate('/success');
@@ -155,18 +170,38 @@ const Deliver = () => {
           <form style={{ width: '100%' }} onSubmit={sumbmitHandler}>
             <Box my="4" display={'flex'} justifyContent="center"></Box>
             <Box my={'4'}>
-              <FormLabel htmlFor="SELECT CONSIGNMENT_NO:" children="CONSIGNMENT_NO:" />
-              <Select onChange={consignmentChange}>
+              <FormLabel htmlFor="city" children="SELECT CITY:" />
+              <Select onChange={changeCity} value={city}>
                 <option value="" disabled>
-                  Select Consignment
+                  SELECT CITY
                 </option>
-                {consignment.map((consignment) => (
-                  <option key={consignment.unique_no} value={consignment.unique_no}>
+                {citys.map((city) => (
+                  <option key={city.value} value={city.value}>
+                    {city.label}
+                  </option>
+                ))}
+              </Select>
+            </Box>
+            {consignments.length > 0 && (
+              <Box my={'4'}>
+              <FormLabel htmlFor="consignment" children="SELECT CONSIGNMENT:" />
+              <Select onChange={consignmentHandler}>
+                <option value="" disabled>
+                  SELECT CONSIGNMENT
+                </option>
+                {consignments.map((consignment, index) => (
+                  <option
+                    key={consignment.unique_no}
+                    value={consignment.unique_no}
+                    selected={index === 0} // Set selected attribute for the first option
+                  >
                     {consignment.unique_no}
                   </option>
                 ))}
               </Select>
             </Box>
+            
+            )}
             <Box my={'2'} key="pieces">
               <FormLabel htmlFor="pieces" children="NO_OF_PIECES:" />
               <Input
@@ -180,19 +215,7 @@ const Deliver = () => {
                 focusBorderColor="yellow.500"
               />
             </Box>
-            <Box my={'4'}>
-              <FormLabel htmlFor="SELECT CITY" children="SELECT_CITY:" />
-              <Select onChange={changeCity}>
-                <option value="" selected hidden disabled>
-                  SELECT_CITY
-                </option>
-                {citys.map((city) => (
-                  <option key={city.value} value={city.value}>
-                    {city.label}
-                  </option>
-                ))}
-              </Select>
-            </Box>
+          
             {renderTableRows()}
             <Box className="avtar1" my={'2'}>
               <FormLabel htmlFor="chooseAvatar" children="CHOOSE FILE" />

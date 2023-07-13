@@ -36,6 +36,36 @@ const Pick = () => {
     }
   };
 
+  const downloadPDF = async () => {
+    try {
+      const response = await axios.get(`${apiurl}/pdf-download/${unique_no}`, {
+        responseType: 'blob',
+      });
+  
+      if (!response.data) {
+        throw new Error('Error downloading PDF');
+      }
+  
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+  
+      // Create a link element
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${unique_no}.pdf`;
+  
+      // Simulate a click on the link element to trigger the download
+      link.click();
+  
+      // Clean up by revoking the temporary URL
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      // Handle the error, e.g., display an error message to the user
+    }
+  };
+
+
   useEffect(() => {
     fetchData();
   }, [city]); // Fetch data whenever the selected city changes
@@ -48,6 +78,7 @@ const Pick = () => {
           await axios.post(`${apiurl}/create_pick_product`, data, {
             headers: { 'Content-Type': 'application/json' },
           });
+          downloadPDF()
           navigate('/success');
         } catch (error) {
           navigate('/error');

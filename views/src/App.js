@@ -35,20 +35,20 @@ function App() {
      <Route path='/success' element={<Sucees />} />
      <Route path='/error' element={<Failed />} />
 
-     {/* <Route
+  
+<Route
           path="/admin/dashboard"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-              <Dashboard /> 
+           <Dashboard />
             </ProtectedRoute>
           }
 />
-
 <Route
           path="/admin/create_user"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-            <Create_user /> 
+         <Create_user />
             </ProtectedRoute>
           }
 />
@@ -56,7 +56,7 @@ function App() {
           path="/admin/show_user"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-            <Show_user />
+        <Show_user />
             </ProtectedRoute>
           }
 />
@@ -65,15 +65,16 @@ function App() {
           path="/admin/update_user/:id"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-           <Update_user />
+        <Update_user />
             </ProtectedRoute>
           }
 />
+
 <Route
           path="/admin/show_products"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-           <Product />
+       <Product />
             </ProtectedRoute>
           }
 />
@@ -81,29 +82,56 @@ function App() {
           path="/admin/show_all_products"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-           <Allproducts />
+      <Allproducts />
             </ProtectedRoute>
           }
 />
+
 <Route
           path="/admin/update_product/:id"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
-           <Update_Product />
+      <Update_Product />
             </ProtectedRoute>
           }
-/> */}
+/>
+
+<Route
+          path="/admin/genarate"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+     <Genarate />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/assign_cnote_no"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+  <AssignCNoteNumbers />
+            </ProtectedRoute>
+          }
+/>
+
+<Route
+          path="/admin/assign_city"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+<AssignValueForCity />
+            </ProtectedRoute>
+          }
+/>
     <Route path='/admin' element={<Login />} />
-     <Route path='/admin/dashboard' element={<Dashboard />} />
-     <Route path='/admin/create_user' element={<Create_user />} />
-     <Route path='/admin/show_user' element={<Show_user />} />
-     <Route path='/admin/update_user/:id' element={<Update_user />} />
-     <Route path='/admin/show_products' element={<Product />} />
-     <Route path='/admin/show_all_products' element={<Allproducts />} />
-     <Route path='/admin/update_product/:id' element={<Update_Product />} />
-     <Route path='/admin/genarate' element={<Genarate />} />
-     <Route path='/admin/assign_cnote_no' element={<AssignCNoteNumbers />} />
-     <Route path='/admin/assign_city' element={<AssignValueForCity />} />
+     {/* <Route path='/admin/dashboard' element={<Dashboard />} /> */}
+     {/* <Route path='/admin/create_user' element={<Create_user />} /> */}
+     {/* <Route path='/admin/show_user' element={<Show_user />} /> */}
+     {/* <Route path='/admin/update_user/:id' element={<Update_user />} /> */}
+     {/* <Route path='/admin/show_products' element={<Product />} /> */}
+     {/* <Route path='/admin/show_all_products' element={<Allproducts />} /> */}
+     {/* <Route path='/admin/update_product/:id' element={<Update_Product />} /> */}
+     {/* <Route path='/admin/genarate' element={<Genarate />} /> */}
+     {/* <Route path='/admin/assign_cnote_no' element={<AssignCNoteNumbers />} /> */}
+     {/* <Route path='/admin/assign_city' element={<AssignValueForCity />} /> */}
      
     
     

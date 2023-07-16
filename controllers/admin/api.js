@@ -325,11 +325,20 @@ exports.assignCNoteNumbers = async (req, res, next) => {
   try {
     const { c_note, quantity, state } = req.body;
 
+    // Validation: Check if required fields are present
+    if (!c_note || !quantity || !state) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
     const uniqueNumbers = [];
     const numberRegex = /\d+$/; // Match the number at the end of the string
 
-    // Extract the numeric part from uniqueNO
-    const baseNumber = parseInt(c_note.match(numberRegex)[0]);
+    // Validation: Check if c_note contains a valid number
+    const baseNumberMatch = c_note.match(numberRegex);
+    if (!baseNumberMatch) {
+      return res.status(400).json({ error: 'Invalid c_note format' });
+    }
+    const baseNumber = parseInt(baseNumberMatch[0]);
 
     for (let i = 0; i < quantity; i++) {
       const number = (baseNumber + i).toString().padStart(4, '0');
@@ -342,7 +351,7 @@ exports.assignCNoteNumbers = async (req, res, next) => {
 
     const consignments = await Promise.all(
       uniqueNumbers.map(async (uniqueNumber) => {
-        const setConsignment = new SetConsignment({ unique_no: uniqueNumber,state:state });
+        const setConsignment = new SetConsignment({ unique_no: uniqueNumber, state: state });
         return await setConsignment.save();
       })
     );
@@ -354,15 +363,26 @@ exports.assignCNoteNumbers = async (req, res, next) => {
   }
 };
 
+
+
 exports.AssignForCity = async (req, res, next) => {
   try {
     const { c_note, quantity, city, state } = req.body;
 
+    // Validation: Check if required fields are present
+    if (!c_note || !quantity || !city || !state) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
     const uniqueNumbers = [];
     const numberRegex = /\d+$/; // Match the number at the end of the string
- console.log(req.body)
-    // Extract the numeric part from uniqueNO
-    const baseNumber = parseInt(c_note.match(numberRegex)[0]);
+
+    // Validation: Check if c_note contains a valid number
+    const baseNumberMatch = c_note.match(numberRegex);
+    if (!baseNumberMatch) {
+      return res.status(400).json({ error: 'Invalid c_note format' });
+    }
+    const baseNumber = parseInt(baseNumberMatch[0]);
 
     for (let i = 0; i < quantity; i++) {
       const number = (baseNumber + i).toString().padStart(4, '0');
@@ -375,17 +395,18 @@ exports.AssignForCity = async (req, res, next) => {
 
     const consignments = await Promise.all(
       uniqueNumbers.map(async (uniqueNumber) => {
-        const setConsignmentCity = new SetConsignmentForCity({ unique_no: uniqueNumber,state:state, city:city });
+        const setConsignmentCity = new SetConsignmentForCity({ unique_no: uniqueNumber, state: state, city: city });
         return await setConsignmentCity.save();
       })
     );
     res.json(consignments);
   } catch (error) {
-  console.log(error);
-  res.json(error);
-  next(error);
+    console.log(error);
+    res.json(error);
+    next(error);
   }
-}
+};
+
 
 exports.getOneConsignmentState = async (req, res, next) => {
   try {

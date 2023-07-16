@@ -412,6 +412,7 @@ exports.getOneConsignmentState = async (req, res, next) => {
   try {
     const { token } = req.query || req.params;
     const user = await User.findOne({ token: token });
+    console.log(token)
     if (user) {
       console.log(user.state);
       const consignments = await SetConsignment.findOne().sort({ unique_no: 1 });

@@ -9,8 +9,11 @@ import { UtdState } from '../User/state/utd';
 import { apiurl } from '../../store';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const AssignValueForCity = () => {
+  const cookies = new Cookies();
+  const token = cookies.get('token');
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [cities, setCities] = useState([]);
@@ -49,7 +52,7 @@ const AssignValueForCity = () => {
     setSelectedCity(cityValue);
   };
   const oneConsignment = async(event) => {
-   const OneConsignments = await axios.get(`${apiurl}/admin/getOneConsignmentState`)
+   const OneConsignments = await axios.get(`${apiurl}/admin/getOneConsignmentState?token=${token}`)
    console.log(OneConsignments.data.consignments.unique_no )
    setC_note(OneConsignments.data.consignments.unique_no)
   };

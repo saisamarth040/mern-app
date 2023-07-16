@@ -27,6 +27,9 @@ router.get("/getOneConsignmentForState", api.getOneConsignmentForState)
 router.get("/getallnumber", api.getAllNumber)
 router.get("/getallnumberstate", api.getAllNumberState)
 router.get("/getallnumberstatecity", api.getAllNumberStatecity)
+router.get("/getgenrateConsginment", api.getConsignmentDataByDate)
+router.get("/getgenrateConsginmentState", api.getConsignmentDataState)
+router.get("/getgenrateConsginmentStateCity", api.getConsignmentDataStateCity)
 
 
 module.exports = router

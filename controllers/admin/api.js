@@ -484,3 +484,108 @@ exports.getAllNumberStatecity = async (req,res,next) => {
     next(error)
   }
 }
+
+exports.getConsignmentDataByDate = async (req, res, next) => {
+  try {
+    const consignments = await Consignment.aggregate([
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+          },
+          data: {
+            $push: {
+              uniqueNO: "$unique_no",
+              quantity: "$quantity",
+            },
+          },
+        },
+      },
+    ]);
+
+    const data = consignments.map((group) => {
+      return {
+        date: group._id,
+        entries: group.data,
+      };
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};
+
+exports.getConsignmentDataState = async (req, res, next) => {
+    try {
+      const consignments = await SetConsignment.aggregate([
+        {
+          $group: {
+            _id: {
+              $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+            },
+            entries: {
+              $push: {
+                uniqueNO: "$unique_no",
+                quantity: "$quantity",
+              },
+            },
+            state: { $first: "$state" }, // Add the state field using $first operator
+          },
+        },
+      ]);
+  
+      const data = consignments.map((group) => {
+        return {
+          date: group._id,
+          state: group.state,
+          entries: group.entries,
+        };
+      });
+  
+      res.json(data);
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+      next(error);
+    }  
+};
+
+exports.getConsignmentDataStateCity = async (req, res, next) => {
+  try {
+    const consignments = await SetConsignmentForCity.aggregate([
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+          },
+          entries: {
+            $push: {
+              uniqueNO: "$unique_no",
+              quantity: "$quantity",
+            },
+          },
+          state: { $first: "$state" }, // Add the state field using $first operator
+          city: { $first: "$city" }, // Add the city field using $first operator
+        },
+      },
+    ]);
+
+    const data = consignments.map((group) => {
+      return {
+        date: group._id,
+        state: group.state,
+        city: group.city, // Include the city field
+        entries: group.entries,
+      };
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+    next(error);
+  }
+};

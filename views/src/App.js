@@ -21,6 +21,9 @@ import { ColorModeSwitcher } from './ColorModeSwitcher';
 import Genarate from './Components/Admin/Genarate';
 import AssignCNoteNumbers from './Components/Admin/AssignCNoteNumbers';
 import AssignValueForCity from './Components/Admin/AssignValueForCity';
+import GenrateNumber from './Components/Admin/GenrateNumber';
+import GenrateNumberState from './Components/Admin/GenrateNumberState';
+import GenrateNumberStateCity from './Components/Admin/GenrateNumberStateCity';
 function App() {
   const { isAuthenticated } = useSelector((state) => state.root);
 
@@ -66,6 +69,30 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
         <Update_user />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/gernrateNumber"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+        <GenrateNumber />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/gernrateNumberState"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+        <GenrateNumberState />
+            </ProtectedRoute>
+          }
+/>
+<Route
+          path="/admin/gernrateNumberStateCity"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} adminRoute={true}>
+        <GenrateNumberStateCity />
             </ProtectedRoute>
           }
 />

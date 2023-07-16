@@ -96,14 +96,29 @@ SAI SAMARTH LOGISTIC
                   GENERATE
                   </Button>
                 </Link>
+                <Link   onClick={onClose} to="/admin/gernrateNumber">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  SHOW GENERATE
+                  </Button>
+                </Link>
                 <Link   onClick={onClose} to="/admin/assign_cnote_no">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   ASSIGN_CNOTE_NO
                   </Button>
                 </Link>
+                <Link   onClick={onClose} to="/admin/gernrateNumberState">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  SHOW STATE_NUMBER
+                  </Button>
+                </Link>
                 <Link   onClick={onClose} to="/admin/assign_city">
                   <Button variant={'ghost'} colorScheme={'yellow'}>
                   ASSIGN_FOR_CITY
+                  </Button>
+                </Link>
+                <Link   onClick={onClose} to="/admin/gernrateNumberStateCity">
+                  <Button variant={'ghost'} colorScheme={'yellow'}>
+                  SHOW CITY_NUMBER
                   </Button>
                 </Link>
               <Link   onClick={onClose} to="/admin/show_products">

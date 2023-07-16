@@ -426,3 +426,39 @@ exports.getOneConsignmentForState = async (req, res, next) => {
     next(error);
   }
 };
+exports.getAllNumber = async (req,res,next) => { 
+  try {
+   const data = await Consignment.find()
+      res.json(data);
+  } catch (error) {
+    console.log(error)
+    res.json(error);
+    next(error)
+  }
+}
+
+exports.getAllNumberState = async (req,res,next) => { 
+  try {
+    const { state} = req.query
+    console.log(state)
+   const data = await SetConsignment.find()
+      res.json(data);
+  } catch (error) {
+    console.log(error)
+    res.json(error);
+    next(error)
+  }
+}
+
+exports.getAllNumberStatecity = async (req,res,next) => { 
+  try {
+    const { state} = req.query
+    console.log(state)
+   const data = await SetConsignmentForCity.find()
+      res.json(data);
+  } catch (error) {
+    console.log(error)
+    res.json(error);
+    next(error)
+  }
+}

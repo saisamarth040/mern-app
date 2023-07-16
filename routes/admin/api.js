@@ -24,6 +24,9 @@ router.post("/assignCNoteNumbers", api.assignCNoteNumbers)
 router.post("/assign_for_city", api.AssignForCity)
 router.get("/getOneConsignmentState", api.getOneConsignmentState)
 router.get("/getOneConsignmentForState", api.getOneConsignmentForState)
+router.get("/getallnumber", api.getAllNumber)
+router.get("/getallnumberstate", api.getAllNumberState)
+router.get("/getallnumberstatecity", api.getAllNumberStatecity)
 
 
 module.exports = router

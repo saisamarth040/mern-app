@@ -35,9 +35,9 @@ exports.signup = async (req, res, next) => {
     } catch (error) {
       res.status(501).json({ message: error.message });
     }
-  };
+};
 
-  exports.getUserByToken = async (req,res,next)=>{
+exports.getUserByToken = async (req,res,next)=>{
     try {
      const {token} = req.query || req.body
      console.log(token)
@@ -52,8 +52,9 @@ exports.signup = async (req, res, next) => {
     } catch (error) {
       return res.status(501).json("server error")
     }
-  }
-  exports.getAllUSer = async (req, res, next) => {
+}
+
+exports.getAllUSer = async (req, res, next) => {
     try {
      
       const user = await User.find().exec();
@@ -65,8 +66,7 @@ exports.signup = async (req, res, next) => {
     } catch (error) {
       res.status(500).json({ message: 'Server error' });
     }
-  }
-
+}
 
 exports.delete_User = async (req, res, next) => {
   const userId = req.query.id;
@@ -102,6 +102,7 @@ exports.getOneUser = async (req, res, next) => {
     res.status(500).json({ message: 'Server error' });
   }
 }
+
 exports.update_user = async (req, res, next) => {
   const userId = req.body.id;
   try {
@@ -135,6 +136,7 @@ exports.getAllProducts = async (req, res, next) => {
     return res.status(501).json("server error")
   }
 }
+
 exports.delete_product = async (req, res, next) => {
   const userId = req.query.id;
 try {
@@ -194,7 +196,6 @@ exports.update_product = async (req, res, next) => {
   }
 }
 
-
 exports.delete_Product = async (req, res, next) => {
   const userId = req.query.id;
 
@@ -218,7 +219,6 @@ try {
 }
 }
 
-
 exports.search = async (req,res,next)=>{
   try {
    const body = req.body;
@@ -240,7 +240,6 @@ exports.searchDetails = async (req,res,next)=>{
     next(error)
   }
 }
-
 
 exports.genareteConsignment = async (req, res, next) => {
   try {
@@ -294,7 +293,6 @@ exports.getConsignment = async (req, res, next) => {
     next(error);
   }
 };
-
 
 exports.getOneConsignment = async (req, res, next) => {
   try {
@@ -363,8 +361,6 @@ exports.assignCNoteNumbers = async (req, res, next) => {
   }
 };
 
-
-
 exports.AssignForCity = async (req, res, next) => {
   try {
     const { c_note, quantity, city, state } = req.body;
@@ -407,7 +403,6 @@ exports.AssignForCity = async (req, res, next) => {
   }
 };
 
-
 exports.getOneConsignmentState = async (req, res, next) => {
   try {
     const { token } = req.query || req.params;
@@ -448,6 +443,7 @@ exports.getOneConsignmentForState = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.getAllNumber = async (req,res,next) => { 
   try {
    const data = await Consignment.find()

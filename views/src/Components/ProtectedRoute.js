@@ -15,4 +15,5 @@ const ProtectedRoute = ({
   return children ? children : <Outlet />;
 };
 
+
 export default ProtectedRoute;

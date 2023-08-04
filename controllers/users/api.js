@@ -11,6 +11,7 @@ exports.product_pick = async (req,res,next)=>{
   const city = req.body.city;
   const art = req.body.art;
   const status = "PICK"
+  console.log(req.body)
   const formattedDate = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
   try {
     console.log(req.body)
@@ -89,6 +90,61 @@ exports.product_deliver = async (req, res, next) => {
   }
 };
 
+// exports.pdf = async (req, res, next) => {
+//   try {
+//     console.log(req.params);
+//     const unique_no = req.params.id;
+//     const product = await Product.findOne({ unique_no });
+//     if (!product) {
+//       return res.status(404).json({ message: 'Product not found' });
+//     }
+// console.log(product)
+//     // Create a new PDF document
+//     const doc = new PDFDocument();
+
+//     // Set the appropriate headers for the response
+//     res.setHeader('Content-Type', 'application/pdf');
+//     res.setHeader('Content-Disposition', `attachment; filename=${unique_no}.pdf`);
+
+//     // Pipe the PDF document directly to the response stream
+//     doc.pipe(res);
+//     // doc.image('https://res.cloudinary.com/de692wzxl/image/upload/v1689614612/logo48_jcd72c.png', 50, 50, { width: 100 });
+
+//     //     // Add company information
+//         doc.fontSize(18).text('Sai Samarth Logistics ', 40, 60, { align: 'left' });
+//         doc.fontSize(18).text('bhopal', 40, 80, { align: 'left' });
+//         doc.moveDown();
+//         doc.fontSize(17).text(`${product.pick_art}`, 180, 60, { align: 'right', underline: true  });
+//         doc.moveDown();
+ 
+    
+//     // Generate the PDF content
+//     // doc.fontSize(14).text(`Consignment Number: ${product.unique_no}`, 40, 180 ,{align: 'left', underline: true});
+//     //     doc.moveDown();
+//     doc.fontSize(14).text(`Consignment Number`, 40, 200 ,{align: 'left', underline: true});
+//     doc.fontSize(14).text(`${product.unique_no}`, 190, 200 ,{align: 'left'});
+//     doc.fontSize(12).text(`Pieces`, 40, 220 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`${product.pick_pieces}`, 190, 220 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`City`, 40, 240 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`${product.pick_city}`, 190, 240 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`Status`, 40, 260 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`${product.status}`, 190, 260 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`Pick Time`, 40, 280 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`${product.pick_time}`, 190, 280 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`Pick Art`, 40, 300 ,{align: 'left', underline: true});
+//     doc.fontSize(12).text(`${product.pick_art}`, 190, 300 ,{align: 'left', underline: true});
+
+   
+
+//     // End the document and response stream
+//     doc.end();
+//   } catch (error) {
+//     res.json({ message: error });
+//     next(error);
+//   }
+// };
+
+
 exports.pdf = async (req, res, next) => {
   try {
     console.log(req.params);
@@ -107,33 +163,63 @@ exports.pdf = async (req, res, next) => {
 
     // Pipe the PDF document directly to the response stream
     doc.pipe(res);
-    // doc.image('https://res.cloudinary.com/de692wzxl/image/upload/v1689614612/logo48_jcd72c.png', 50, 50, { width: 100 });
 
-    //     // Add company information
-        doc.fontSize(18).text('Sai Samarth Logistics ', 40, 60, { align: 'left' });
-        doc.fontSize(18).text('bhopal', 40, 80, { align: 'left' });
-        doc.moveDown();
-        doc.fontSize(17).text('Indore', 180, 60, { align: 'right', underline: true  });
-        doc.moveDown();
- 
+    // Set fonts and font sizes
+    doc.font('Helvetica-Bold').fontSize(18);
+    doc.fillColor('#410c0c'); 
+    // Add company information
+    doc.font('Helvetica').fontSize(12)
+    doc.text('Sai Samarth Logistics', 40, 40);
+    doc.font('Helvetica').fontSize(18);
+    doc.text('Bhopal', 40, 60);
+
+    // Add bill header
+    doc.fillColor('#410c0c'); 
+    doc.font('Helvetica-Bold').fontSize(18).text('INVOICE', 450, 40, { align: 'right' });
+    doc.fontSize(12).text(`Date: ${new Date().toLocaleDateString()}`, 450, 60, { align: 'right' });
+
+    // Add customer details
+    // doc.fontSize(14).text(`Customer Support: saisamarthlogistic.com`, 40, 120);
+    // doc.fontSize(12).text(` Support Email: saisamarthlogistic040@gmail.com`, 40, 140);
+    // Add more customer details if needed
+    // doc.font('Helvetica-Bold').fontSize(18).text(`${product.pick_art}`, 450, 150, { align: 'left', continued: true });
+    doc.fillColor('#49368d'); 
+    doc.font('Helvetica').fontSize(11)
+    doc.text(`${product.pick_art}`, 40, 130);
+    doc.fillColor('#68392b'); 
+    doc.font('Helvetica').fontSize(14);
+    doc.text('ART CENTER', 40, 150);
+
+    doc.moveTo(40, 170).lineTo(550, 170).strokeColor('#68392b').stroke();
+
+    // Add bill items
+    doc.fillColor('#000'); 
+    doc.font('Helvetica').fontSize(13)
+    doc.text('Consignment Number', 60, 200);
+    doc.text(`Pieces`, 200, 200);
+    doc.text(`City`, 280, 200);
+    doc.text(`Status`, 380, 200);
+    doc.text(`Art Center`, 460, 200);
+
+
+    doc.fillColor('#49368d'); 
+
+    doc.fontSize(12).text(`${product.unique_no}`, 60, 230);
+    doc.fontSize(12).text(`${product.pick_pieces}`, 200, 230);
+    doc.fontSize(12).text(`${product.pick_city}`, 280, 230);
+    doc.fontSize(12).text(`${product.status}`, 380, 230);
+    doc.fontSize(12).text(`${product.pick_art}`, 460, 230);
     
-    // Generate the PDF content
-    // doc.fontSize(14).text(`Consignment Number: ${product.unique_no}`, 40, 180 ,{align: 'left', underline: true});
-    //     doc.moveDown();
-    doc.fontSize(14).text(`Consignment Number`, 40, 200 ,{align: 'left', underline: true});
-    doc.fontSize(14).text(`${product.unique_no}`, 190, 200 ,{align: 'left'});
-    doc.fontSize(12).text(`Pieces`, 40, 220 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`${product.pick_pieces}`, 190, 220 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`City`, 40, 240 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`${product.pick_city}`, 190, 240 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`Status`, 40, 260 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`${product.status}`, 190, 260 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`Pick Time`, 40, 280 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`${product.pick_time}`, 190, 280 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`Pick Art`, 40, 300 ,{align: 'left', underline: true});
-    doc.fontSize(12).text(`${product.pick_art}`, 190, 300 ,{align: 'left', underline: true});
+    // Add more bill items if needed
+    doc.fillColor('#68392b'); 
 
-   
+    doc.moveTo(40, 400).lineTo(550, 400).strokeColor('#68392b').stroke();
+    doc.fontSize(12).text(`Customer Support: saisamarthlogistic.com`, 40, 420);
+    doc.fontSize(12).text(`Support Email: saisamarthlogistic040@gmail.com`, 40, 440);
+    // Calculate and add total
+    // const total = product.pick_pieces * product.price; // Adjust calculation based on your data
+    // doc.fontSize(14).text('Total:', 350, 400, { align: 'right' });
+    // doc.fontSize(14).text(`$${total.toFixed(2)}`, 450, 400, { align: 'right' });
 
     // End the document and response stream
     doc.end();
@@ -142,77 +228,3 @@ exports.pdf = async (req, res, next) => {
     next(error);
   }
 };
-
-
-
-// exports.pdf = async (req, res, next) => {
-//   try {
-//     console.log(req.params);
-//     const unique_no = req.params.id;
-//     const product = await Product.findOne({ unique_no });
-//     if (!product) {
-//       return res.status(404).json({ message: 'Product not found' });
-//     }
-
-//     // Create a new PDF document
-//     const doc = new PDFDocument();
-
-//     // Buffer to store the PDF data
-//     const buffers = [];
-//     doc.on('data', (chunk) => buffers.push(chunk));
-//     doc.on('end', () => {
-//       // Concatenate all the buffers into a single buffer
-//       const pdfData = Buffer.concat(buffers);
-
-//       // Set the appropriate headers for the response
-//       res.setHeader('Content-Type', 'application/pdf');
-//       res.setHeader('Content-Disposition', `attachment; filename=${unique_no}.pdf`);
-
-//       // Send the PDF data in the response
-//       res.send(pdfData);
-//     });
-
-//     // Set font styles
-//     doc.font('Helvetica-Bold');
-//     doc.fontSize(20);
-
-//     // Add company logo
-//     doc.image('https://res.cloudinary.com/de692wzxl/image/upload/v1689614612/logo48_jcd72c.png', 50, 50, { width: 100 });
-
-//     // Add company information
-//     doc.text('Sai Samarth Logistics ', 180, 60, { align: 'right' });
-//     doc.text('bhopal', 180, 80, { align: 'right' });
-//     doc.moveDown();
-
-//     // Add customer information
-//     doc.fontSize(14).text(`Customer Name: ${product.customerName}`);
-//     doc.moveDown();
-
-//     // Add bill details
-//     doc.fontSize(14).text(`Bill Number: ${product.unique_no}`);
-//     doc.moveDown();
-
-//     // Add product details
-//     doc.fontSize(14).text('Product Details', { underline: true });
-//     doc.text(`Pieces: ${product.pick_pieces}`);
-//     doc.text(`Status: ${product.status}`);
-//     doc.text(`Pick Time: ${product.pick_time}`);
-//     doc.text(`Pick Art: ${product.pick_art}`);
-//     doc.moveDown();
- 
-//     // Add additional information or notes
-//     doc.fontSize(12).text('Additional Information');
-//     doc.fontSize(10).text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
-//     doc.moveDown();
-
-//     // Add signature section
-//     doc.fontSize(12).text('Authorized Signature', { align: 'right' });
-//     doc.text('_________________________', { align: 'right' });
-
-//     // End the document
-//     doc.end();
-//   } catch (error) {
-//     res.json({ message: error });
-//     next(error);
-//   }
-// };

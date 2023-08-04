@@ -5,6 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { citys } from './city';
 import { apiurl } from '../../store';
+import { MpState } from './state/mp';
+import { ChhState } from './state/chh';
+import { RJState } from './state/rj';
+import { MadhyaPradesh, Rajasthan, Uttrakhand } from './ArtCenter';
 
 const Pick = () => {
   const cookies = new Cookies();
@@ -26,6 +30,16 @@ const Pick = () => {
     setUnique_no(event.target.value);
   };
   
+  const getToken = async () => {
+    try {
+      const response = await axios.get(`${apiurl}/admin/getUserByToken?token=${token}`);
+      const data = response.data;
+      console.log(response)
+      setMyState(data.state);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchData = async () => {
     try {
       const response = await axios.get(`${apiurl}/admin/getOneConsignmentForState?city=${city}`);
@@ -66,8 +80,80 @@ const Pick = () => {
   };
 
 
+  function renderTableRows() {
+    if (myState.trim() === 'MP' ||  myState.trim() ==="Madhya Pradesh") {
+      return (
+        <Box my={'4'}>
+          <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+          <Select onChange={(e) => setArt(e.target.value)}>
+            <option value="" selected hidden disabled>
+              SELECT_ART_CENTER
+            </option>
+            {MadhyaPradesh.map((state) => (
+              <option key={state.value} value={state.value}>
+                {state.label}
+              </option>
+            ))}
+          </Select>
+        </Box>
+      );
+    }
+    
+    if (myState.trim() === 'Rajasthan') {
+      return (
+        <Box my={'4'}>
+          <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+          <Select onChange={(e) => setArt(e.target.value)}>
+            <option value="" selected hidden disabled>
+              SELECT_STATE
+            </option>
+            {Rajasthan.map((state) => (
+              <option key={state.value} value={state.value}>
+                {state.label}
+              </option>
+            ))}
+          </Select>
+        </Box>
+      );
+    }
+    if (myState.trim() === 'Rajasthan') {
+      return (
+        <Box my={'4'}>
+          <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+          <Select onChange={(e) => setArt(e.target.value)}>
+            <option value="" selected hidden disabled>
+              SELECT_STATE
+            </option>
+            {Rajasthan.map((state) => (
+              <option key={state.value} value={state.value}>
+                {state.label}
+              </option>
+            ))}
+          </Select>
+        </Box>
+      );
+    }
+    if (myState.trim() === 'Uttrakhand') {
+      return (
+        <Box my={'4'}>
+          <FormLabel htmlFor="SELECT STATE" children="SELECT_STATE:" />
+          <Select onChange={(e) => setArt(e.target.value)}>
+            <option value="" selected hidden disabled>
+              SELECT_STATE
+            </option>
+            {Uttrakhand.map((state) => (
+              <option key={state.value} value={state.value}>
+                {state.label}
+              </option>
+            ))}
+          </Select>
+        </Box>
+      );
+    }
+  }
   useEffect(() => {
     fetchData();
+    getToken()
   }, [city]); // Fetch data whenever the selected city changes
 
   const data = { pieces, city, unique_no:unique_no, token, art };
@@ -110,25 +196,24 @@ const Pick = () => {
                 ))}
               </Select>
             </Box>
+            {renderTableRows()}
             {consignments.length > 0 && (
-              <Box my={'4'}>
-              <FormLabel htmlFor="consignment" children="SELECT CONSIGNMENT:" />
-              <Select onChange={consignmentHandler}>
-                <option value="" disabled>
-                  SELECT CONSIGNMENT
-                </option>
-                {consignments.map((consignment, index) => (
-                  <option
-                    key={consignment.unique_no}
-                    value={consignment.unique_no}
-                    selected={index === 0} // Set selected attribute for the first option
-                  >
-                    {consignment.unique_no}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            
+             <Box my={'4'}>
+             <FormLabel htmlFor="consignment" children="SELECT CONSIGNMENT:" />
+             <Select onChange={consignmentHandler} value={unique_no}>
+               <option value="" disabled>
+                 SELECT CONSIGNMENT
+               </option>
+               {consignments.map((consignment, index) => (
+                 <option
+                   key={consignment.unique_no}
+                   value={consignment.unique_no}
+                 >
+                   {consignment.unique_no}
+                 </option>
+               ))}
+             </Select>
+           </Box>
             )}
             <Box my={'2'}>
               <FormLabel htmlFor="pieces" children="NO OF PIECES:" />
@@ -151,6 +236,26 @@ const Pick = () => {
                 Add options for art centers 
               </Select>
             </Box> */}
+             {/* {consignments.length > 0 && (
+              <Box my={'4'}>
+              <FormLabel htmlFor="consignment" children="SELECT ART CENTER:" />
+              <Select onChange={(event) => setArt(event.target.value)}>
+                <option value="" disabled>
+                SELECT ART CENTER
+                </option>
+                {consignments.map((consignment, index) => (
+                  <option
+                    key={consignment.unique_no}
+                    value={consignment.unique_no}
+                    selected={index === 0} // Set selected attribute for the first option
+                  >
+                    {consignment.unique_no}
+                  </option>
+                ))}
+              </Select>
+            </Box> */}
+            
+            {/* )} */}
             <Box my="3">{err && err}</Box>
             <Button my="2" colorScheme={'yellow'} type="submit">
               SUBMIT
